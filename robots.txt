@@ -1,0 +1,6 @@
+# Well, well, well... what do we have here?
+# Looks like someone knows how to enumerate :)
+
+# Congratulations on checking robots.txt!
+# flag{I_should_have_removed_robots.txt}
+
