@@ -1631,36 +1631,36 @@ a {
 
     /* Global Adjustments */
     :root {
-        --spacing-lg: 2.5rem;
-        --spacing-xl: 4rem;
+        --spacing-lg: 2rem;
+        --spacing-xl: 3rem;
     }
 
     .section {
-        padding: 4rem 0;
+        padding: 3rem 0;
     }
 
     .container {
-        padding: 0 1.5rem;
+        padding: 0 1.25rem;
         /* Ensure consistent outer padding */
     }
 
     h1 {
-        font-size: 2.5rem;
+        font-size: 2.2rem;
     }
 
     h2 {
-        font-size: 2rem;
+        font-size: 1.8rem;
     }
 
     h3 {
-        font-size: 1.5rem;
+        font-size: 1.4rem;
     }
 
-    /* Navigation */
+    /* Navigation - FORCE ALIGNMENT */
     .navbar .container {
-        justify-content: space-between;
-        /* Separate Logo and Hamburger */
+        justify-content: space-between !important;
         width: 100%;
+        display: flex !important;
     }
 
     .mobile-menu-toggle {
@@ -1704,20 +1704,33 @@ a {
     /* Hero Section */
     .hero {
         padding-top: 100px;
-        min-height: auto;
-        padding-bottom: 4rem;
+        min-height: 100vh;
+        /* Ensure full height on mobile */
+        padding-bottom: 2rem;
     }
 
     .hero-content {
-        padding: 0 1rem;
+        padding: 0 0.5rem;
     }
 
-    /* About Section - Fix "Awkward" Layout */
+    /* About Section - Fix "Awkward" Layout & Typography */
     .about-content {
-        padding: 1.5rem;
-        /* Reduce padding to give text more room */
-        text-align: left;
-        /* Verify text alignment */
+        padding: 1.25rem;
+        text-align: left !important;
+        /* Fix "awkward" justification gaps */
+    }
+
+    .about-content p {
+        text-align: left !important;
+        font-size: 1rem;
+    }
+
+    /* CRITICAL: DISABLE SCROLL REVEAL ON MOBILE */
+    /* This ensures content is ALWAYS visible even if JS fails or offsets are wrong */
+    .reveal-hidden {
+        opacity: 1 !important;
+        transform: none !important;
+        visibility: visible !important;
     }
 
     /* Cards & Grids - FORCE STACKING & VISIBILITY */
@@ -1729,27 +1742,23 @@ a {
         width: 100%;
         margin-bottom: 1.5rem;
         flex: none;
-        /* Prevent flex shrinking */
     }
 
     /* Ensure Containers don't clip shadows or content */
     .blog-grid-container,
     .projects-grid-container {
-        overflow: visible;
-        padding: 1rem 0;
-        /* Remove side padding that might squash */
+        overflow: visible !important;
+        padding: 0;
         background: transparent;
-        /* Optional: Remove bg if it looks crowded */
         border: none;
-        /* Optional: Clean up border on mobile */
     }
 
-    /* Remove the fade overlay on mobile if it interferes */
+    /* Remove the fade overlay on mobile */
     .blog-grid-container::before,
     .blog-grid-container::after,
     .projects-grid-container::before,
     .projects-grid-container::after {
-        display: none;
+        display: none !important;
     }
 
     .certifications-grid {
@@ -1757,37 +1766,37 @@ a {
         flex-direction: column;
         flex-wrap: nowrap;
         align-items: center;
-        gap: 1.5rem;
+        width: 100%;
     }
 
     .blog-grid {
         display: flex;
         flex-direction: column;
-        overflow: visible;
-        /* Ensure shadows show */
+        overflow: visible !important;
         padding: 0;
         gap: 1.5rem;
+        width: 100%;
     }
 
     .projects-grid {
         display: flex;
         flex-direction: column;
-        overflow: visible;
+        overflow: visible !important;
         margin: 0;
         padding: 0;
         gap: 1.5rem;
-        cursor: default;
+        width: 100%;
     }
 
     /* Contact Section */
     .contact-content-grid {
         display: flex;
         flex-direction: column;
-        gap: 3rem;
+        gap: 2rem;
     }
 
     .contact-form {
-        padding: 1.5rem;
+        padding: 1.25rem;
     }
 
     /* Footer */
