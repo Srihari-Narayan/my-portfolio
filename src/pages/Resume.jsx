@@ -11,13 +11,11 @@ pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/b
 function Resume() {
     const resumeFileName = 'Srihari N Narayan Resume 2026.pdf';
     const [numPages, setNumPages] = useState(null);
-    const [width, setWidth] = useState(window.innerWidth > 800 ? 800 : window.innerWidth - 40);
-    const [isMobile, setIsMobile] = useState(window.innerWidth < 1024); // Desktop considered >= 1024px
+    const [width, setWidth] = useState(window.innerWidth > 1000 ? 1000 : window.innerWidth - 40);
 
     useEffect(() => {
         const handleResize = () => {
-            setWidth(window.innerWidth > 800 ? 800 : window.innerWidth - 40);
-            setIsMobile(window.innerWidth < 1024);
+            setWidth(window.innerWidth > 1000 ? 1000 : window.innerWidth - 40);
         };
 
         window.addEventListener('resize', handleResize);
@@ -48,41 +46,31 @@ function Resume() {
             </div>
 
             <div className="pdf-viewer-wrapper">
-                {isMobile ? (
-                    /* Mobile: Render as Images (react-pdf) */
-                    <Document
-                        file={`/${resumeFileName}`}
-                        onLoadSuccess={onDocumentLoadSuccess}
-                        loading={
-                            <div className="loading-spinner">
-                                <i className="fas fa-spinner fa-spin"></i> Loading PDF...
-                            </div>
-                        }
-                        error={
-                            <div className="error-message">
-                                Failed to load PDF. Please use the download button.
-                            </div>
-                        }
-                    >
-                        {Array.from(new Array(numPages), (el, index) => (
-                            <Page
-                                key={`page_${index + 1}`}
-                                pageNumber={index + 1}
-                                width={width}
-                                renderTextLayer={false}
-                                renderAnnotationLayer={false}
-                                className="pdf-page"
-                            />
-                        ))}
-                    </Document>
-                ) : (
-                    /* Desktop: Render as Native Iframe */
-                    <iframe
-                        src={`/${resumeFileName}#toolbar=0&navpanes=0&view=FitH`}
-                        title="Resume PDF"
-                        className="desktop-pdf-frame"
-                    />
-                )}
+                <Document
+                    file={`/${resumeFileName}`}
+                    onLoadSuccess={onDocumentLoadSuccess}
+                    loading={
+                        <div className="loading-spinner">
+                            <i className="fas fa-spinner fa-spin"></i> Loading PDF...
+                        </div>
+                    }
+                    error={
+                        <div className="error-message">
+                            Failed to load PDF. Please use the download button.
+                        </div>
+                    }
+                >
+                    {Array.from(new Array(numPages), (el, index) => (
+                        <Page
+                            key={`page_${index + 1}`}
+                            pageNumber={index + 1}
+                            width={width}
+                            renderTextLayer={true}
+                            renderAnnotationLayer={true}
+                            className="pdf-page"
+                        />
+                    ))}
+                </Document>
             </div>
 
             <style>{`
@@ -112,28 +100,21 @@ function Resume() {
                     width: 100%;
                     max-width: 1200px;
                     flex-grow: 1;
-                    min-height: 80vh;
                 }
-                /* Mobile specific styles */
                 .pdf-page {
                     margin-bottom: 20px;
-                    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+                    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
                 }
                 .pdf-page canvas {
                     border-radius: 8px;
                     max-width: 100%;
                     height: auto !important;
                 }
-                
-                /* Desktop Iframe Styles */
-                .desktop-pdf-frame {
-                    width: 100%;
-                    height: 85vh;
-                    border: none;
-                    border-radius: 8px;
-                    box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+                /* Text Selection Styles */
+                .plugin--text-layer {
+                    /* Fix for text layer alignment if needed */
                 }
-
+                
                 @media (max-width: 768px) {
                     .resume-header {
                         flex-direction: column;
