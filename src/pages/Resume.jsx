@@ -74,11 +74,16 @@ function Resume() {
             </div>
 
             <style>{`
+                html, body {
+                    overflow-y: auto !important; /* Force scrolling */
+                }
                 .resume-viewer-container {
                     padding-top: 100px;
                     min-height: 100vh;
+                    height: auto;
                     display: flex;
                     flex-direction: column;
+                    overflow-y: visible; /* Ensure content flows */
                 }
                 .resume-header {
                     display: flex;
@@ -93,22 +98,26 @@ function Resume() {
                     display: flex;
                     flex-direction: column;
                     align-items: center;
-                    padding: 0;
+                    padding: 0 0 50px 0; /* Add bottom padding */
                     background: transparent;
                     border-radius: var(--radius-lg);
                     margin: 0 auto;
                     width: 100%;
                     max-width: 1200px;
                     flex-grow: 1;
+                    overflow: visible;
                 }
                 .pdf-page {
                     margin-bottom: 20px;
-                    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+                    /* Removed shadow to eliminate "outline" effect if that was it */
+                    box-shadow: none; 
+                    background: transparent;
                 }
                 .pdf-page canvas {
                     border-radius: 8px;
                     max-width: 100%;
                     height: auto !important;
+                    /* Optional: slight dimming if user finds it too bright? No, keeping standard for now */
                 }
                 /* Text Selection Styles */
                 .plugin--text-layer {
