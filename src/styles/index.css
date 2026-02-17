@@ -1621,6 +1621,9 @@ a {
 /* ===================================
    Mobile Responsiveness
    =================================== */
+/* ===================================
+   Mobile Responsiveness
+   =================================== */
 @media (max-width: 768px) {
     /* Global Adjustments */
     :root {
@@ -1684,17 +1687,40 @@ a {
         padding: 0 1rem;
     }
 
-    /* Cards & Grids */
+    /* Cards & Grids - FORCE STACKING */
     .cert-card, 
     .blog-card,
     .project-card {
         min-width: 100%;
         max-width: 100%;
-        margin-bottom: 1rem;
+        width: 100%;
+        margin-bottom: 1.5rem;
+        flex: none; /* Prevent flex shrinking */
     }
 
     .certifications-grid {
         flex-direction: column;
+        display: flex;
+        flex-wrap: nowrap;
+        align-items: center;
+    }
+
+    .blog-grid {
+        display: flex;
+        flex-direction: column;
+        overflow-x: visible; /* Disable horizontal scroll */
+        padding: var(--spacing-md) 1rem; /* Adjust padding */
+        gap: 1.5rem;
+    }
+
+    .projects-grid {
+        display: flex;
+        flex-direction: column;
+        overflow-x: visible;
+        margin: 0;
+        padding: var(--spacing-md) 1rem;
+        gap: 1.5rem;
+        cursor: default; /* Remove grab cursor */
     }
 
     /* Contact Section */
@@ -1706,12 +1732,6 @@ a {
 
     .contact-form {
         padding: 1.5rem;
-    }
-
-    /* Projects Grid - Horizontal Scroll tweaks */
-    .projects-grid {
-        margin: 0;
-        padding-bottom: 2rem;
     }
 
     /* Footer */
