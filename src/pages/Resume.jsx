@@ -78,7 +78,7 @@ function Resume() {
                 ) : (
                     /* Desktop: Render as Native Iframe */
                     <iframe
-                        src={`/${resumeFileName}`}
+                        src={`/${resumeFileName}#toolbar=0&navpanes=0&view=FitH`}
                         title="Resume PDF"
                         className="desktop-pdf-frame"
                     />
