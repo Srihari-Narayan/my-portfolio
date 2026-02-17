@@ -1729,8 +1729,15 @@ a {
     }
 
     .ctf-announcement-bar {
-        display: none;
+        display: none !important;
         /* Hide on mobile to save space */
+    }
+
+    /* Extended Mobile/Tablet Landscape Support */
+    @media (max-width: 1024px) {
+        .ctf-announcement-bar {
+            display: none !important;
+        }
     }
 
     /* Hero Section */
