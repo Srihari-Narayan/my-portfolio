@@ -116,7 +116,7 @@ function Resume() {
                     display: flex;
                     justify-content: space-between;
                     align-items: center;
-                    gap: 1rem;
+                    gap: 3rem; /* Increased spacing */
                 }
 
                 .resume-title {
