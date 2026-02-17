@@ -117,8 +117,7 @@ function Resume() {
                     border-radius: 8px;
                     max-width: 100%;
                     height: auto !important;
-                    /* Dark Mode Filter: Invert colors but preserve hues */
-                    filter: invert(1) hue-rotate(180deg);
+                    box-shadow: 0 4px 12px rgba(0,0,0,0.3); /* Subtle shadow for depth */
                 }
                 /* Text Selection Styles */
                 .plugin--text-layer {
