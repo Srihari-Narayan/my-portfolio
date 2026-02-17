@@ -42,7 +42,9 @@ function Writeups() {
     // Infinite Scroll Logic
     useEffect(() => {
         const scrollContainer = scrollRef.current;
-        if (!scrollContainer || loading || error || isPaused || filteredPosts.length === 0) return;
+        const isMobile = window.innerWidth < 768; // Check for mobile
+
+        if (!scrollContainer || loading || error || isPaused || filteredPosts.length === 0 || isMobile) return;
 
         // Skip auto-scroll for the placeholder tabs
         if (activeFilter === 'machines' || activeFilter === 'certs') return;

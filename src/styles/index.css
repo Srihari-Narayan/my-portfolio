@@ -1722,7 +1722,9 @@ a {
 
     .about-content p {
         text-align: left !important;
-        font-size: 1rem;
+        font-size: 0.9rem;
+        /* Smaller font for mobile */
+        line-height: 1.5;
     }
 
     /* CRITICAL: DISABLE SCROLL REVEAL ON MOBILE */

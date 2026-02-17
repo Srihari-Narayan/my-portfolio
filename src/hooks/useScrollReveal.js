@@ -1,18 +1,25 @@
 import { useEffect, useRef, useState } from 'react';
 
 const useScrollReveal = (threshold = 0.2) => {
-    const [isVisible, setIsVisible] = useState(false);
+    // Check if mobile (screen width < 768px)
+    const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
+
+    // Always visible on mobile, otherwise start hidden
+    const [isVisible, setIsVisible] = useState(isMobile);
     const elementRef = useRef(null);
 
     useEffect(() => {
+        // Skip observer on mobile
+        if (isMobile) {
+            setIsVisible(true);
+            return;
+        }
+
         const observer = new IntersectionObserver(
             ([entry]) => {
                 if (entry.isIntersecting) {
                     setIsVisible(true);
-                    // Once visible, we can stop observing if we only want it to fade in once
-                    // observer.unobserve(entry.target); 
                 } else {
-                    // Reset if you want it to fade out when scrolling away
                     setIsVisible(false);
                 }
             },
@@ -30,7 +37,7 @@ const useScrollReveal = (threshold = 0.2) => {
                 observer.unobserve(elementRef.current);
             }
         };
-    }, [threshold]);
+    }, [threshold, isMobile]);
 
     return [elementRef, isVisible];
 };
