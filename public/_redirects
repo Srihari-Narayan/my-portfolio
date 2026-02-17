@@ -1,5 +1,5 @@
+# Ensure special files are served directly BEFORE the wildcard
+/robots.txt /robots.txt 200
+
 # Handle SPA routing (fallback to index.html for unknown paths)
 /* /index.html 200
-
-# Ensure robots.txt is served directly (though file existence usually wins)
-/robots.txt /robots.txt 200
