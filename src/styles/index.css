@@ -357,6 +357,17 @@ a {
     color: var(--color-text-secondary);
 }
 
+/* Desktop Styles for Hero CTA - Ensures separation */
+.hero-cta {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 2rem;
+    /* Consistent spacing on Desktop too */
+    position: relative;
+    z-index: 10;
+}
+
 .social-links {
     display: flex;
     gap: var(--spacing-sm);

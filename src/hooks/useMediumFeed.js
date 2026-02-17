@@ -17,10 +17,13 @@ export function useMediumFeed(username) {
                 const data = await response.json();
 
                 if (data.status === 'ok' && data.items && data.items.length > 0) {
+                    // Sort by date descending (just in case RSS isn't perfectly ordered)
+                    const sortedItems = data.items.sort((a, b) => new Date(b.pubDate) - new Date(a.pubDate));
+
                     // Auto-categorize posts
-                    const categorizedPosts = data.items.slice(0, 6).map(post => {
+                    const categorizedPosts = sortedItems.slice(0, 50).map(post => {
                         const title = post.title.toLowerCase();
-                        const content = post.description.toLowerCase();
+                        const content = (post.description || "").toLowerCase();
                         const categories = [];
 
                         if (title.includes('ctf') || content.includes('ctf')) {
@@ -30,8 +33,10 @@ export function useMediumFeed(username) {
                             title.includes('machine') || content.includes('walkthrough')) {
                             categories.push('machines');
                         }
+                        // Broader check for certifications
                         if (title.includes('certification') || title.includes('cert') ||
-                            title.includes('oscp') || title.includes('ejpt')) {
+                            title.includes('oscp') || title.includes('ejpt') || title.includes('pnpt') ||
+                            title.includes('exam') || title.includes('review')) {
                             categories.push('certs');
                         }
 
