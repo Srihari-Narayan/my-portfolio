@@ -109,15 +109,19 @@ function Resume() {
                 }
                 .pdf-page {
                     margin-bottom: 20px;
-                    /* Removed shadow to eliminate "outline" effect if that was it */
-                    box-shadow: none; 
-                    background: transparent;
+                    box-shadow: none !important;
+                    background: transparent !important;
+                    outline: none !important;
+                    border: none !important;
+                }
+                .react-pdf__Page {
+                    background-color: transparent !important;
                 }
                 .pdf-page canvas {
                     border-radius: 8px;
                     max-width: 100%;
                     height: auto !important;
-                    box-shadow: 0 4px 12px rgba(0,0,0,0.3); /* Subtle shadow for depth */
+                    display: block; /* Removes inline whitespace */
                 }
                 /* Text Selection Styles */
                 .plugin--text-layer {

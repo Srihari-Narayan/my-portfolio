@@ -68,6 +68,26 @@ body {
     overflow-x: hidden;
 }
 
+/* Custom Scrollbar for Dark Theme */
+::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--color-bg);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--color-red);
+}
+
 /* ===================================
    Typography
    =================================== */
