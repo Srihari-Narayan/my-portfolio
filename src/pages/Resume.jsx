@@ -5,18 +5,22 @@ import 'react-pdf/dist/Page/AnnotationLayer.css';
 import 'react-pdf/dist/Page/TextLayer.css';
 
 // Set up the worker
-// Using unpkg as a reliable CDN for the worker to avoid build complexity
 pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.mjs`;
 
 function Resume() {
     const resumeFileName = 'Srihari N Narayan Resume 2026.pdf';
     const [numPages, setNumPages] = useState(null);
-    const [width, setWidth] = useState(window.innerWidth > 1000 ? 1000 : window.innerWidth - 40);
+    const [width, setWidth] = useState(1000);
 
     useEffect(() => {
-        const handleResize = () => {
-            setWidth(window.innerWidth > 1000 ? 1000 : window.innerWidth - 40);
-        };
+        function handleResize() {
+            // Cap width at 1000px, or use screen width minus padding for mobile
+            const newWidth = Math.min(window.innerWidth - 32, 1000);
+            setWidth(newWidth);
+        }
+
+        // Initial set
+        handleResize();
 
         window.addEventListener('resize', handleResize);
         return () => window.removeEventListener('resize', handleResize);
@@ -34,111 +38,134 @@ function Resume() {
     };
 
     return (
-        <div className="resume-viewer-container">
+        <div className="resume-page-container">
+            {/* Header Section */}
             <div className="resume-header">
-                <Link to="/" className="btn btn-outline">
-                    <i className="fas fa-arrow-left"></i> Back to Portfolio
-                </Link>
-                <h1>Resume</h1>
-                <button onClick={handleDownload} className="btn btn-primary">
-                    <i className="fas fa-download"></i> Download PDF
-                </button>
+                <div className="header-content">
+                    <Link to="/" className="btn btn-outline">
+                        <i className="fas fa-arrow-left"></i> Back to Homepage
+                    </Link>
+                    <button onClick={handleDownload} className="btn btn-primary">
+                        Download PDF <i className="fas fa-download"></i>
+                    </button>
+                </div>
             </div>
 
-            <div className="pdf-viewer-wrapper">
+            {/* PDF Viewer Section */}
+            <div className="pdf-viewer-container">
                 <Document
                     file={`/${resumeFileName}`}
                     onLoadSuccess={onDocumentLoadSuccess}
                     loading={
-                        <div className="loading-spinner">
-                            <i className="fas fa-spinner fa-spin"></i> Loading PDF...
+                        <div className="loading-text">
+                            <i className="fas fa-spinner fa-spin"></i> Loading Resume...
                         </div>
                     }
                     error={
-                        <div className="error-message">
+                        <div className="error-text">
                             Failed to load PDF. Please use the download button.
                         </div>
                     }
+                    className="pdf-document"
                 >
                     {Array.from(new Array(numPages), (el, index) => (
-                        <Page
-                            key={`page_${index + 1}`}
-                            pageNumber={index + 1}
-                            width={width}
-                            renderTextLayer={true}
-                            renderAnnotationLayer={true}
-                            className="pdf-page"
-                        />
+                        <div key={`page_wrapper_${index}`} className="page-wrapper">
+                            <Page
+                                pageNumber={index + 1}
+                                width={width}
+                                renderTextLayer={true}
+                                renderAnnotationLayer={true}
+                                className="pdf-page-render"
+                            />
+                        </div>
                     ))}
                 </Document>
             </div>
 
             <style>{`
-                html, body {
-                    overflow-y: auto !important; /* Force scrolling */
-                }
-                .resume-viewer-container {
-                    padding-top: 100px;
+                /* Page Container - Dark Background */
+                .resume-page-container {
                     min-height: 100vh;
-                    height: auto;
+                    background-color: var(--color-bg); /* Black/Grey */
                     display: flex;
                     flex-direction: column;
-                    overflow-y: visible; /* Ensure content flows */
+                    align-items: center;
                 }
+
+                /* Header - Sticky Top, Glass Effect */
                 .resume-header {
+                    width: 100%;
+                    padding: 1.5rem 0;
+                    margin-bottom: 2rem;
+                    background: rgba(10, 10, 10, 0.95); /* Matches --color-bg */
+                    border-bottom: 1px solid var(--color-surface);
+                    position: sticky;
+                    top: 0;
+                    z-index: 100;
+                    box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+                }
+
+                .header-content {
+                    max-width: 1000px;
+                    margin: 0 auto;
+                    padding: 0 1rem;
                     display: flex;
                     justify-content: space-between;
                     align-items: center;
-                    padding: 0 2rem 2rem 2rem;
-                    max-width: 1200px;
-                    margin: 0 auto;
-                    width: 100%;
                 }
-                .pdf-viewer-wrapper {
+
+                /* PDF Container */
+                .pdf-viewer-container {
+                    width: 100%;
+                    max-width: 1000px;
+                    display: flex;
+                    justify-content: center;
+                    padding-bottom: 4rem;
+                }
+
+                .pdf-document {
                     display: flex;
                     flex-direction: column;
                     align-items: center;
-                    padding: 0 0 50px 0; /* Add bottom padding */
-                    background: transparent;
-                    border-radius: var(--radius-lg);
-                    margin: 0 auto;
-                    width: 100%;
-                    max-width: 1200px;
-                    flex-grow: 1;
-                    overflow: visible;
+                    gap: 2rem; /* Spacing between pages */
                 }
-                .pdf-page {
-                    margin-bottom: 20px;
-                    box-shadow: none !important;
-                    background: transparent !important;
-                    outline: none !important;
-                    border: none !important;
+
+                .page-wrapper {
+                    box-shadow: 0 10px 40px rgba(0,0,0,0.6); /* Deep shadow, no border */
+                    border-radius: 4px; /* Slight round for paper feel */
+                    overflow: hidden;
+                    background-color: white; /* Ensure paper is white */
                 }
-                .react-pdf__Page {
-                    background-color: transparent !important;
-                }
-                .pdf-page canvas {
-                    border-radius: 8px;
-                    max-width: 100%;
+
+                /* Override react-pdf defaults to prevent white outlines */
+                .pdf-page-render canvas {
+                    display: block !important;
                     height: auto !important;
-                    display: block; /* Removes inline whitespace */
-                }
-                /* Text Selection Styles */
-                .plugin--text-layer {
-                    /* Fix for text layer alignment if needed */
+                    max-width: 100%;
                 }
                 
-                @media (max-width: 768px) {
-                    .resume-header {
+                .react-pdf__Page__textContent {
+                    border-radius: 4px;
+                }
+
+                .loading-text, .error-text {
+                    color: var(--color-text-secondary);
+                    font-size: 1.2rem;
+                    margin-top: 2rem;
+                }
+
+                /* Mobile Adjustments */
+                @media (max-width: 600px) {
+                    .header-content {
                         flex-direction: column;
                         gap: 1rem;
                     }
-                    .resume-header h1 {
-                        order: -1;
-                    }
-                    .resume-header .btn {
+                    .header-content .btn {
                         width: 100%;
                         justify-content: center;
+                    }
+                    .resume-header {
+                        position: relative; /* Unstick on mobile to save screen space */
                     }
                 }
             `}</style>
