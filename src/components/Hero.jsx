@@ -40,10 +40,13 @@ function Hero() {
                         <p className="hero-subtitle">Cybersecurity Enthusiast | CTF Player | Security Researcher | AI Security</p>
                         <p className="hero-description">Passionate about offensive security and securing the future of Artificial Intelligence.</p>
 
-                        <div className="social-links">
+                        <div className="hero-cta">
                             <Link to="/resume" className="btn btn-primary">
                                 <i className="fas fa-file-pdf"></i> View Resume
                             </Link>
+                        </div>
+
+                        <div className="social-links">
                             <a href="https://www.linkedin.com/in/srihari-narayan/" target="_blank" rel="noopener noreferrer" className="social-link" aria-label="LinkedIn">
                                 <i className="fab fa-linkedin-in"></i>
                             </a>

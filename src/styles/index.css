@@ -1608,7 +1608,8 @@ a {
 }
 
 .form-textarea {
-    resize: vertical;
+    resize: none;
+    /* Disable resizing */
     min-height: 120px;
 }
 
@@ -1713,20 +1714,27 @@ a {
         padding: 0 0.5rem;
     }
 
-    /* Hero Socials - Resume on top, Icons below */
+    /* Hero Logic - Force Block Separation */
+    .hero-cta {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        margin-bottom: 2rem;
+        /* Hard spacing */
+    }
+
+    /* Hero Socials */
     .hero .social-links {
         flex-wrap: wrap;
         justify-content: center;
+        width: 100%;
+        gap: 1.5rem;
+        /* Consistent gap between icons */
     }
 
-    .hero .social-links .btn {
-        flex: 0 0 100%;
-        /* Force full width (new line) */
-        max-width: 300px;
-        /* Prevent being too wide */
-        margin-bottom: 1rem;
-        display: flex;
-        justify-content: center;
+    .hero .social-links .social-link {
+        /* Ensure icons don't shrink/grow weirdly */
+        flex: none;
     }
 
     /* About Section - Revert to Justified */
@@ -1797,13 +1805,10 @@ a {
     .blog-grid {
         display: flex;
         flex-direction: row;
-        /* Horizontal again */
         overflow-x: auto;
-        /* Allow scroll logic to work */
         padding: 1rem 0;
         gap: 1rem;
         width: 100%;
-        /* Snap effect for "one article at a time" */
         scroll-snap-type: x mandatory;
     }
 
@@ -1842,7 +1847,6 @@ a {
     /* Writeups Carousel Buttons - Translucent */
     .carousel-button {
         background: rgba(0, 0, 0, 0.3) !important;
-        /* Translucent dark */
         backdrop-filter: blur(4px);
         border: 1px solid rgba(255, 255, 255, 0.1);
         color: rgba(255, 255, 255, 0.7);
@@ -1851,18 +1855,15 @@ a {
     /* Hero Jitter Fix - Fixed Dimensions for Title */
     .hero-title {
         min-height: 1.2em;
-        /* Reserve space for text */
         width: 100%;
         display: flex;
         justify-content: center;
         overflow: hidden;
-        /* Prevent spillover */
     }
 
     .gradient-text {
         display: inline-block;
         white-space: nowrap;
-        /* Prevent line wrapping during scramble */
         width: 100%;
         text-align: center;
     }
@@ -1870,7 +1871,6 @@ a {
     /* Resume Page - Mobile optimized */
     .resume-viewer-container {
         padding-top: 100px;
-        height: auto;
         min-height: 100vh;
         display: flex;
         flex-direction: column;
@@ -1884,20 +1884,107 @@ a {
 
     .resume-header h1 {
         order: -1;
-        /* Title first */
     }
 
     .resume-header .btn {
         width: 100%;
-        /* Full width buttons */
         justify-content: center;
     }
 
-    /* PDF Viewer - Mobile Fallback */
-    /* Iframes are bad on mobile, often show blank or 150px height */
+    /* PDF Viewer - Mobile Fallback - HIDE ON MOBILE */
     .pdf-viewer {
-        height: 500px;
-        /* Force minimum height */
-        -webkit-overflow-scrolling: touch;
+        display: none !important;
+        /* Hide iframe entirely on mobile */
+    }
+
+    .resume-viewer-container::after {
+        content: "PDF Preview not available on mobile. Please use the Download button above.";
+        display: block;
+        text-align: center;
+        padding: 2rem;
+        color: var(--color-text-secondary);
+        font-style: italic;
+    }
+
+    /* CTF Mobile Banner - Ensure strictly visible on page but announcement bar hidden */
+    .ctf-announcement-bar {
+        display: none !important;
+    }
+
+    .ctf-mobile-banner {
+        min-height: 80vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .terminal-window {
+        background: #1a1a1a;
+        border-radius: 6px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        overflow: hidden;
+        border: 1px solid #333;
+        font-family: 'Courier New', monospace;
+    }
+
+    .terminal-header {
+        background: #2d2d2d;
+        padding: 8px 12px;
+        display: flex;
+        align-items: center;
+        border-bottom: 1px solid #333;
+    }
+
+    .terminal-buttons {
+        display: flex;
+        gap: 6px;
+    }
+
+    .terminal-btn {
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+    }
+
+    .terminal-btn.red {
+        background: #ff5f56;
+    }
+
+    .terminal-btn.yellow {
+        background: #ffbd2e;
+    }
+
+    .terminal-btn.green {
+        background: #27c93f;
+    }
+
+    .terminal-title {
+        flex-grow: 1;
+        text-align: center;
+        color: #999;
+        font-size: 12px;
+    }
+
+    .terminal-content {
+        padding: 20px;
+        color: #fff;
+    }
+
+    .command-line {
+        margin-bottom: 1rem;
+    }
+
+    .prompt {
+        color: var(--color-red);
+        margin-right: 8px;
+    }
+
+    .text-yellow {
+        color: #ffbd2e;
+        font-weight: bold;
+    }
+
+    .text-green {
+        color: #27c93f;
     }
 }
