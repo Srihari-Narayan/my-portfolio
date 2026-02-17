@@ -79,8 +79,8 @@ function Resume() {
                     display: flex;
                     flex-direction: column;
                     align-items: center;
-                    padding: 20px;
-                    background: var(--color-surface);
+                    padding: 0;
+                    background: transparent;
                     border-radius: var(--radius-lg);
                     margin: 0 auto;
                     max-width: 100%;
