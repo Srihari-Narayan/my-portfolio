@@ -9,11 +9,24 @@ const MatrixBackground = () => {
 
         // Set canvas size to fill window
         const resizeCanvas = () => {
+             // Basic implementation: always resize. 
+             // Improved: Check if width changed significantly to avoid mobile address bar jitter
             canvas.width = window.innerWidth;
             canvas.height = window.innerHeight;
         };
 
-        window.addEventListener('resize', resizeCanvas);
+        // Track previous dimensions to ignore address bar showing/hiding on mobile
+        let prevWidth = window.innerWidth;
+        
+        const handleResize = () => {
+            // Only resize if width changes (orientation change) or height changes significantly
+            if (Math.abs(window.innerWidth - prevWidth) > 0) {
+                prevWidth = window.innerWidth;
+                resizeCanvas();
+            }
+        };
+
+        window.addEventListener('resize', handleResize);
         resizeCanvas();
 
         // Matrix characters

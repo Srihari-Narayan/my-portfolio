@@ -1624,7 +1624,11 @@ a {
 /* ===================================
    Mobile Responsiveness
    =================================== */
+/* ===================================
+   Mobile Responsiveness
+   =================================== */
 @media (max-width: 768px) {
+
     /* Global Adjustments */
     :root {
         --spacing-lg: 2.5rem;
@@ -1635,16 +1639,36 @@ a {
         padding: 4rem 0;
     }
 
-    h1 { font-size: 2.5rem; }
-    h2 { font-size: 2rem; }
-    h3 { font-size: 1.5rem; }
+    .container {
+        padding: 0 1.5rem;
+        /* Ensure consistent outer padding */
+    }
+
+    h1 {
+        font-size: 2.5rem;
+    }
+
+    h2 {
+        font-size: 2rem;
+    }
+
+    h3 {
+        font-size: 1.5rem;
+    }
 
     /* Navigation */
+    .navbar .container {
+        justify-content: space-between;
+        /* Separate Logo and Hamburger */
+        width: 100%;
+    }
+
     .mobile-menu-toggle {
         display: block;
         z-index: 1001;
     }
 
+    /* Fixed Navigation Overlay */
     .nav-links {
         display: flex;
         position: fixed;
@@ -1673,7 +1697,8 @@ a {
     }
 
     .ctf-announcement-bar {
-        display: none; /* Hide on mobile to save space */
+        display: none;
+        /* Hide on mobile to save space */
     }
 
     /* Hero Section */
@@ -1687,40 +1712,71 @@ a {
         padding: 0 1rem;
     }
 
-    /* Cards & Grids - FORCE STACKING */
-    .cert-card, 
+    /* About Section - Fix "Awkward" Layout */
+    .about-content {
+        padding: 1.5rem;
+        /* Reduce padding to give text more room */
+        text-align: left;
+        /* Verify text alignment */
+    }
+
+    /* Cards & Grids - FORCE STACKING & VISIBILITY */
+    .cert-card,
     .blog-card,
     .project-card {
         min-width: 100%;
         max-width: 100%;
         width: 100%;
         margin-bottom: 1.5rem;
-        flex: none; /* Prevent flex shrinking */
+        flex: none;
+        /* Prevent flex shrinking */
+    }
+
+    /* Ensure Containers don't clip shadows or content */
+    .blog-grid-container,
+    .projects-grid-container {
+        overflow: visible;
+        padding: 1rem 0;
+        /* Remove side padding that might squash */
+        background: transparent;
+        /* Optional: Remove bg if it looks crowded */
+        border: none;
+        /* Optional: Clean up border on mobile */
+    }
+
+    /* Remove the fade overlay on mobile if it interferes */
+    .blog-grid-container::before,
+    .blog-grid-container::after,
+    .projects-grid-container::before,
+    .projects-grid-container::after {
+        display: none;
     }
 
     .certifications-grid {
-        flex-direction: column;
         display: flex;
+        flex-direction: column;
         flex-wrap: nowrap;
         align-items: center;
+        gap: 1.5rem;
     }
 
     .blog-grid {
         display: flex;
         flex-direction: column;
-        overflow-x: visible; /* Disable horizontal scroll */
-        padding: var(--spacing-md) 1rem; /* Adjust padding */
+        overflow: visible;
+        /* Ensure shadows show */
+        padding: 0;
         gap: 1.5rem;
     }
 
     .projects-grid {
         display: flex;
         flex-direction: column;
-        overflow-x: visible;
+        overflow: visible;
         margin: 0;
-        padding: var(--spacing-md) 1rem;
+        padding: 0;
         gap: 1.5rem;
-        cursor: default; /* Remove grab cursor */
+        cursor: default;
     }
 
     /* Contact Section */
