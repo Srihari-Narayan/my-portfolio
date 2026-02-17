@@ -42,10 +42,13 @@ function Resume() {
             {/* Header Section */}
             <div className="resume-header">
                 <div className="header-content">
-                    <Link to="/" className="btn btn-outline">
+                    <Link to="/" className="btn btn-outline back-btn">
                         <i className="fas fa-arrow-left"></i> Back to Homepage
                     </Link>
-                    <button onClick={handleDownload} className="btn btn-primary">
+
+                    <h1 className="resume-title">Resume</h1>
+
+                    <button onClick={handleDownload} className="btn btn-primary download-btn">
                         Download PDF <i className="fas fa-download"></i>
                     </button>
                 </div>
@@ -61,6 +64,7 @@ function Resume() {
                             <i className="fas fa-spinner fa-spin"></i> Loading Resume...
                         </div>
                     }
+                    warning={null} /* Suppress warnings */
                     error={
                         <div className="error-text">
                             Failed to load PDF. Please use the download button.
@@ -95,7 +99,7 @@ function Resume() {
                 /* Header - Sticky Top, Glass Effect */
                 .resume-header {
                     width: 100%;
-                    padding: 1.5rem 0;
+                    padding: 1rem 0;
                     margin-bottom: 2rem;
                     background: rgba(10, 10, 10, 0.95); /* Matches --color-bg */
                     border-bottom: 1px solid var(--color-surface);
@@ -106,12 +110,27 @@ function Resume() {
                 }
 
                 .header-content {
-                    max-width: 1000px;
+                    max-width: 1200px;
                     margin: 0 auto;
-                    padding: 0 1rem;
+                    padding: 0 2rem;
                     display: flex;
                     justify-content: space-between;
                     align-items: center;
+                    gap: 1rem;
+                }
+
+                .resume-title {
+                    color: var(--color-red);
+                    font-size: 2rem;
+                    margin: 0;
+                    text-transform: uppercase;
+                    letter-spacing: 2px;
+                    text-align: center;
+                    flex-grow: 1; /* Center it */
+                }
+
+                .btn {
+                    white-space: nowrap;
                 }
 
                 /* PDF Container */
@@ -121,6 +140,8 @@ function Resume() {
                     display: flex;
                     justify-content: center;
                     padding-bottom: 4rem;
+                    padding-left: 1rem;
+                    padding-right: 1rem;
                 }
 
                 .pdf-document {
@@ -128,6 +149,7 @@ function Resume() {
                     flex-direction: column;
                     align-items: center;
                     gap: 2rem; /* Spacing between pages */
+                    width: 100%;
                 }
 
                 .page-wrapper {
@@ -135,6 +157,7 @@ function Resume() {
                     border-radius: 4px; /* Slight round for paper feel */
                     overflow: hidden;
                     background-color: white; /* Ensure paper is white */
+                    transition: transform 0.3s ease;
                 }
 
                 /* Override react-pdf defaults to prevent white outlines */
@@ -155,17 +178,27 @@ function Resume() {
                 }
 
                 /* Mobile Adjustments */
-                @media (max-width: 600px) {
+                @media (max-width: 768px) {
                     .header-content {
                         flex-direction: column;
                         gap: 1rem;
+                        padding: 0 1rem;
                     }
+                    
+                    .resume-title {
+                        order: -1; /* Title on top */
+                        font-size: 1.5rem;
+                        margin-bottom: 0.5rem;
+                    }
+
                     .header-content .btn {
                         width: 100%;
                         justify-content: center;
                     }
+
                     .resume-header {
                         position: relative; /* Unstick on mobile to save screen space */
+                        padding: 1.5rem 0;
                     }
                 }
             `}</style>
