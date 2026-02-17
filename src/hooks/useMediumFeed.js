@@ -8,7 +8,8 @@ export function useMediumFeed(username) {
     useEffect(() => {
         async function fetchFeed() {
             try {
-                const rssUrl = `https://medium.com/@${username}/feed`;
+                // Add query param to rssUrl itself to bypass Medium/potential intermediate caching
+                const rssUrl = `https://medium.com/@${username}/feed?t=${Date.now()}`;
                 const cacheBuster = Date.now();
                 const apiUrl = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(rssUrl)}&api_key=lfe1onwq2vpncf8wuzoplrwnykrqekqbxtg31jex&count=10&_=${cacheBuster}`;
 

@@ -1891,19 +1891,10 @@ a {
         justify-content: center;
     }
 
-    /* PDF Viewer - Mobile Fallback - HIDE ON MOBILE */
-    .pdf-viewer {
-        display: none !important;
-        /* Hide iframe entirely on mobile */
-    }
-
-    .resume-viewer-container::after {
-        content: "PDF Preview not available on mobile. Please use the Download button above.";
-        display: block;
-        text-align: center;
-        padding: 2rem;
-        color: var(--color-text-secondary);
-        font-style: italic;
+    /* PDF Viewer - React PDF is responsive */
+    .pdf-viewer-wrapper {
+        width: 100%;
+        overflow-x: hidden;
     }
 
     /* CTF Mobile Banner - Ensure strictly visible on page but announcement bar hidden */
