@@ -9,15 +9,15 @@ const MatrixBackground = () => {
 
         // Set canvas size to fill window
         const resizeCanvas = () => {
-             // Basic implementation: always resize. 
-             // Improved: Check if width changed significantly to avoid mobile address bar jitter
+            // Basic implementation: always resize. 
+            // Improved: Check if width changed significantly to avoid mobile address bar jitter
             canvas.width = window.innerWidth;
             canvas.height = window.innerHeight;
         };
 
         // Track previous dimensions to ignore address bar showing/hiding on mobile
         let prevWidth = window.innerWidth;
-        
+
         const handleResize = () => {
             // Only resize if width changes (orientation change) or height changes significantly
             if (Math.abs(window.innerWidth - prevWidth) > 0) {
@@ -77,7 +77,7 @@ const MatrixBackground = () => {
                 top: 0,
                 left: 0,
                 width: '100%',
-                height: '100%',
+                height: '100dvh', // Dynamic viewport height for mobile
                 zIndex: -1,
                 opacity: 0.3, // Subtle background
                 pointerEvents: 'none' // Click through
