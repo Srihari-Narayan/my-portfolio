@@ -83,6 +83,15 @@ function Navigation() {
     // Only show section links on home page
     const isHome = location.pathname === '/';
 
+    // Check if mobile (screen width < 768px)
+    const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+
+    useEffect(() => {
+        const handleResize = () => setIsMobile(window.innerWidth < 768);
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
+
     return (
         <nav className="navbar" style={navbarStyle}>
             <div className="container">
@@ -96,8 +105,14 @@ function Navigation() {
                     )}
                     {!isHome && <li><Link to="/">Home</Link></li>}
                     <li><Link to="/resume">Resume</Link></li>
-                    <li><Link to="/submit-flags">Submit Flags</Link></li>
-                    <li><Link to="/admin">Admin Panel</Link></li>
+
+                    {/* CTF Sections - Hidden on Mobile */}
+                    {!isMobile && (
+                        <>
+                            <li><Link to="/submit-flags">Submit Flags</Link></li>
+                            <li><Link to="/admin">Admin Panel</Link></li>
+                        </>
+                    )}
                 </ul>
                 <button
                     className="mobile-menu-toggle"

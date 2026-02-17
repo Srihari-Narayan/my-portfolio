@@ -1838,4 +1838,66 @@ a {
         text-align: center;
         gap: 2rem;
     }
+
+    /* Writeups Carousel Buttons - Translucent */
+    .carousel-button {
+        background: rgba(0, 0, 0, 0.3) !important;
+        /* Translucent dark */
+        backdrop-filter: blur(4px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        color: rgba(255, 255, 255, 0.7);
+    }
+
+    /* Hero Jitter Fix - Fixed Dimensions for Title */
+    .hero-title {
+        min-height: 1.2em;
+        /* Reserve space for text */
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        overflow: hidden;
+        /* Prevent spillover */
+    }
+
+    .gradient-text {
+        display: inline-block;
+        white-space: nowrap;
+        /* Prevent line wrapping during scramble */
+        width: 100%;
+        text-align: center;
+    }
+
+    /* Resume Page - Mobile optimized */
+    .resume-viewer-container {
+        padding-top: 100px;
+        height: auto;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .resume-header {
+        flex-direction: column;
+        gap: 1rem;
+        padding: 1rem;
+    }
+
+    .resume-header h1 {
+        order: -1;
+        /* Title first */
+    }
+
+    .resume-header .btn {
+        width: 100%;
+        /* Full width buttons */
+        justify-content: center;
+    }
+
+    /* PDF Viewer - Mobile Fallback */
+    /* Iframes are bad on mobile, often show blank or 150px height */
+    .pdf-viewer {
+        height: 500px;
+        /* Force minimum height */
+        -webkit-overflow-scrolling: touch;
+    }
 }
