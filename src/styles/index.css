@@ -2042,3 +2042,31 @@ a {
     }
 }
 
+
+/* Hero Jitter Fix - Monospace for Hacker Text */
+.hero-title .gradient-text {
+    font-family: "Courier New", Courier, monospace;
+    letter-spacing: -2px; /* Tighten up spacing slightly */
+    display: inline-block;
+    min-width: 300px; /* Ensure minimum width to prevent collapse */
+}
+
+/* Hide Carousel Buttons on Mobile */
+@media (max-width: 768px) {
+    .carousel-button {
+        display: none !important;
+    }
+}
+
+/* Force Hide CTF Banner in Landscape Mobile */
+@media screen and (max-height: 550px) and (orientation: landscape) {
+    .ctf-announcement-bar {
+        display: none !important;
+    }
+}
+
+/* Ensure Carousel Auto-Scroll continues but without flash */
+.blog-grid {
+    scroll-behavior: auto !important; /* Prevent smooth scroll interfering with JS */
+}
+

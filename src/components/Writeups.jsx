@@ -181,6 +181,11 @@ function Writeups() {
                 <div className="blog-grid-container"
                     onMouseEnter={() => setIsPaused(true)}
                     onMouseLeave={() => setIsPaused(false)}
+                    onTouchStart={() => setIsPaused(true)}
+                    onTouchEnd={() => {
+                        // Resume after a delay to allow momentum scrolling to finish
+                        setTimeout(() => setIsPaused(false), 2000);
+                    }}
                 >
                     {(activeFilter === 'machines' || activeFilter === 'certs') ? (
                         <div className="stay-tuned-msg fade-in">
