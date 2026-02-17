@@ -117,7 +117,8 @@ function Resume() {
                     border-radius: 8px;
                     max-width: 100%;
                     height: auto !important;
-                    /* Optional: slight dimming if user finds it too bright? No, keeping standard for now */
+                    /* Dark Mode Filter: Invert colors but preserve hues */
+                    filter: invert(1) hue-rotate(180deg);
                 }
                 /* Text Selection Styles */
                 .plugin--text-layer {
