@@ -42,9 +42,9 @@ function Writeups() {
     // Infinite Scroll Logic
     useEffect(() => {
         const scrollContainer = scrollRef.current;
-        const isMobile = window.innerWidth < 768; // Check for mobile
+        // Re-enabled for mobile as requested (horizontal carousel)
 
-        if (!scrollContainer || loading || error || isPaused || filteredPosts.length === 0 || isMobile) return;
+        if (!scrollContainer || loading || error || isPaused || filteredPosts.length === 0) return;
 
         // Skip auto-scroll for the placeholder tabs
         if (activeFilter === 'machines' || activeFilter === 'certs') return;

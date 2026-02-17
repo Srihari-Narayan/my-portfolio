@@ -1713,18 +1713,31 @@ a {
         padding: 0 0.5rem;
     }
 
-    /* About Section - Fix "Awkward" Layout & Typography */
+    /* Hero Socials - Resume on top, Icons below */
+    .hero .social-links {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .hero .social-links .btn {
+        flex: 0 0 100%;
+        /* Force full width (new line) */
+        max-width: 300px;
+        /* Prevent being too wide */
+        margin-bottom: 1rem;
+        display: flex;
+        justify-content: center;
+    }
+
+    /* About Section - Revert to Justified */
     .about-content {
         padding: 1.25rem;
-        text-align: left !important;
-        /* Fix "awkward" justification gaps */
+        text-align: justify !important;
     }
 
     .about-content p {
-        text-align: left !important;
-        font-size: 0.9rem;
-        /* Smaller font for mobile */
-        line-height: 1.5;
+        text-align: justify !important;
+        font-size: 0.95rem;
     }
 
     /* CRITICAL: DISABLE SCROLL REVEAL ON MOBILE */
@@ -1737,7 +1750,6 @@ a {
 
     /* Cards & Grids - FORCE STACKING & VISIBILITY */
     .cert-card,
-    .blog-card,
     .project-card {
         min-width: 100%;
         max-width: 100%;
@@ -1746,16 +1758,27 @@ a {
         flex: none;
     }
 
+    /* Blog Card - Horizontal Carousel on Mobile */
+    .blog-card {
+        min-width: 100%;
+        /* Show one at a time */
+        width: 100%;
+        margin-right: 0;
+        /* Handled by gap */
+        flex: none;
+    }
+
     /* Ensure Containers don't clip shadows or content */
     .blog-grid-container,
     .projects-grid-container {
-        overflow: visible !important;
+        overflow: hidden !important;
+        /* Hide the duplicates off-screen */
         padding: 0;
         background: transparent;
         border: none;
     }
 
-    /* Remove the fade overlay on mobile */
+    /* Remove the fade overlay on mobile (optional, maybe keep it for carousel?) */
     .blog-grid-container::before,
     .blog-grid-container::after,
     .projects-grid-container::before,
@@ -1773,11 +1796,19 @@ a {
 
     .blog-grid {
         display: flex;
-        flex-direction: column;
-        overflow: visible !important;
-        padding: 0;
-        gap: 1.5rem;
+        flex-direction: row;
+        /* Horizontal again */
+        overflow-x: auto;
+        /* Allow scroll logic to work */
+        padding: 1rem 0;
+        gap: 1rem;
         width: 100%;
+        /* Snap effect for "one article at a time" */
+        scroll-snap-type: x mandatory;
+    }
+
+    .blog-card {
+        scroll-snap-align: center;
     }
 
     .projects-grid {
