@@ -113,10 +113,19 @@ function Resume() {
                     max-width: 1200px;
                     margin: 0 auto;
                     padding: 0 2rem;
-                    display: flex;
-                    justify-content: space-between;
+                    display: grid;
+                    grid-template-columns: 1fr auto 1fr;
                     align-items: center;
-                    gap: 3rem; /* Increased spacing */
+                    gap: 1rem;
+                }
+
+                /* Align outer items to edges to ensure center item is perfectly centered */
+                .header-content > :first-child {
+                    justify-self: start;
+                }
+                
+                .header-content > :last-child {
+                    justify-self: end;
                 }
 
                 .resume-title {
@@ -126,7 +135,6 @@ function Resume() {
                     text-transform: uppercase;
                     letter-spacing: 2px;
                     text-align: center;
-                    flex-grow: 1; /* Center it */
                 }
 
                 .btn {
@@ -144,6 +152,8 @@ function Resume() {
                     padding-right: 1rem;
                 }
 
+                /* ... existing styles ... */
+                
                 .pdf-document {
                     display: flex;
                     flex-direction: column;
@@ -180,6 +190,7 @@ function Resume() {
                 /* Mobile Adjustments */
                 @media (max-width: 768px) {
                     .header-content {
+                        display: flex;
                         flex-direction: column;
                         gap: 1rem;
                         padding: 0 1rem;
