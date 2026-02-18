@@ -11,11 +11,12 @@ function Navigation() {
 
     const sequences = [
         {
-            output: "CTF Challenge: There are 5 hidden flags scattered throughout this website. Can you find them all?"
-        },
-        {
             command: "whoami",
             output: "srihari"
+        },
+        {
+            command: "cat flag.txt",
+            output: "There are 5 flags hidden on this website. Can you find them all?"
         }
     ];
 
