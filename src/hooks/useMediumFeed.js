@@ -26,18 +26,24 @@ export function useMediumFeed(username) {
                         const content = (post.description || "").toLowerCase();
                         const categories = [];
 
-                        if (title.includes('ctf') || content.includes('ctf')) {
-                            categories.push('ctf');
+                        // 1. Check for Certifications (Prioritize this to ensure they appear in the right tab)
+                        if (title.includes('certification') || title.includes('cert') ||
+                            title.includes('oscp') || title.includes('ejpt') || title.includes('pnpt') ||
+                            title.includes('ceh') || title.includes('cissp') || title.includes('security+') ||
+                            title.includes('exam') || title.includes('review')) {
+                            categories.push('certs');
                         }
+
+                        // 2. Check for Machine Walkthroughs
                         if (title.includes('hackthebox') || title.includes('tryhackme') ||
                             title.includes('machine') || content.includes('walkthrough')) {
                             categories.push('machines');
                         }
-                        // Broader check for certifications
-                        if (title.includes('certification') || title.includes('cert') ||
-                            title.includes('oscp') || title.includes('ejpt') || title.includes('pnpt') ||
-                            title.includes('exam') || title.includes('review')) {
-                            categories.push('certs');
+
+                        // 3. Check for CTF (Only if not already classified as a Cert, or if explicitly desired)
+                        // If it's a cert review, we probably don't want it in the generic "CTF" bucket even if it mentions CTF
+                        if (!categories.includes('certs') && (title.includes('ctf') || content.includes('ctf'))) {
+                            categories.push('ctf');
                         }
 
                         return { ...post, autoCategories: categories };

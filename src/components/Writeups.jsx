@@ -47,7 +47,7 @@ function Writeups() {
         if (!scrollContainer || loading || error || isPaused || filteredPosts.length === 0) return;
 
         // Skip auto-scroll for the placeholder tabs
-        if (activeFilter === 'machines' || activeFilter === 'certs') return;
+        if (activeFilter === 'machines') return;
 
         let animationFrameId;
         // Use a variable to track sub-pixel movement
@@ -187,7 +187,7 @@ function Writeups() {
                         setTimeout(() => setIsPaused(false), 2000);
                     }}
                 >
-                    {(activeFilter === 'machines' || activeFilter === 'certs') ? (
+                    {(activeFilter === 'machines') ? (
                         <div className="stay-tuned-msg fade-in">
                             <i className="fas fa-hourglass-half"></i>
                             <p>Stay tuned for future articles</p>
