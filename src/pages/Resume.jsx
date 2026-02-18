@@ -116,31 +116,17 @@ function Resume() {
                     display: grid;
                     grid-template-columns: 1fr auto 1fr;
                     align-items: center;
-                    gap: 1rem;
+                    gap: 3rem; /* Push buttons away from title */
                 }
 
-                /* Align outer items to edges to ensure center item is perfectly centered */
-                .header-content > :first-child {
-                    justify-self: start;
-                }
-                
-                .header-content > :last-child {
-                    justify-self: end;
-                }
-
-                .resume-title {
-                    color: var(--color-red);
-                    font-size: 2rem;
-                    margin: 0;
-                    text-transform: uppercase;
-                    letter-spacing: 2px;
-                    text-align: center;
-                }
+                /* ... existing styles ... */
 
                 .btn {
                     white-space: nowrap;
-                    min-width: 200px; /* Fixed width for uniformity */
+                    width: 220px; /* Exact fixed width for identical shape */
                     justify-content: center;
+                    display: inline-flex; /* Ensure flex alignment for content */
+                    align-items: center;
                 }
 
                 /* PDF Container */
