@@ -20,12 +20,17 @@ function Writeups() {
         return post.autoCategories.includes(activeFilter);
     });
 
-    // Duplicate posts for infinite effect (3 sets for bi-directional safety)
-    const displayPosts = (filteredPosts.length > 0) ? [...filteredPosts, ...filteredPosts, ...filteredPosts] : [];
+    // For 'all' filter: Duplicate posts for infinite effect (3 sets)
+    // For other filters: Just show the filtered posts (sorted by date desc)
+    const displayPosts = (filteredPosts.length > 0)
+        ? (activeFilter === 'all'
+            ? [...filteredPosts, ...filteredPosts, ...filteredPosts]
+            : [...filteredPosts].sort((a, b) => new Date(b.pubDate) - new Date(a.pubDate)))
+        : [];
 
-    // Initialize scroll position to the middle set
+    // Initialize scroll position to the middle set (ONLY for 'all' filter)
     useEffect(() => {
-        if (scrollRef.current && displayPosts.length > 0) {
+        if (activeFilter === 'all' && scrollRef.current && displayPosts.length > 0) {
             const scrollContainer = scrollRef.current;
             // Wait for layout to settle slightly
             setTimeout(() => {
@@ -39,12 +44,12 @@ function Writeups() {
         }
     }, [displayPosts.length, activeFilter]);
 
-    // Infinite Scroll Logic
+    // Infinite Scroll Logic (ONLY for 'all' filter)
     useEffect(() => {
         const scrollContainer = scrollRef.current;
         // Re-enabled for mobile as requested (horizontal carousel)
 
-        if (!scrollContainer || loading || error || isPaused || filteredPosts.length === 0) return;
+        if (activeFilter !== 'all' || !scrollContainer || loading || error || isPaused || filteredPosts.length === 0) return;
 
         // Skip auto-scroll for the placeholder tabs
         if (activeFilter === 'machines') return;
@@ -179,12 +184,13 @@ function Writeups() {
 
                 {/* Content Area */}
                 <div className="blog-grid-container"
-                    onMouseEnter={() => setIsPaused(true)}
-                    onMouseLeave={() => setIsPaused(false)}
-                    onTouchStart={() => setIsPaused(true)}
+                    onMouseEnter={() => activeFilter === 'all' && setIsPaused(true)}
+                    onMouseLeave={() => activeFilter === 'all' && setIsPaused(false)}
+                    onTouchStart={() => activeFilter === 'all' && setIsPaused(true)}
                     onTouchEnd={() => {
-                        // Resume after a delay to allow momentum scrolling to finish
-                        setTimeout(() => setIsPaused(false), 2000);
+                        if (activeFilter === 'all') {
+                            setTimeout(() => setIsPaused(false), 2000);
+                        }
                     }}
                 >
                     {(activeFilter === 'machines') ? (
@@ -194,47 +200,75 @@ function Writeups() {
                         </div>
                     ) : (
                         <>
-                            <button className="carousel-button left" onClick={headerScrollLeft} aria-label="Scroll left">
-                                <i className="fas fa-chevron-left"></i>
-                            </button>
+                            {loading && (
+                                <div className="loading-spinner">
+                                    <i className="fas fa-circle-notch fa-spin"></i>
+                                    <p>Loading posts from Medium...</p>
+                                </div>
+                            )}
 
-                            <div className="blog-grid" ref={scrollRef}>
-                                {loading && (
-                                    <div className="loading-spinner">
-                                        <i className="fas fa-circle-notch fa-spin"></i>
-                                        <p>Loading posts from Medium...</p>
-                                    </div>
-                                )}
+                            {error && (
+                                <div className="loading-spinner">
+                                    <i className="fas fa-exclamation-circle"></i>
+                                    <p>{error}. Please visit Medium directly.</p>
+                                </div>
+                            )}
 
-                                {error && (
-                                    <div className="loading-spinner">
-                                        <i className="fas fa-exclamation-circle"></i>
-                                        <p>{error}. Please visit Medium directly.</p>
-                                    </div>
-                                )}
+                            {!loading && !error && (
+                                activeFilter === 'all' ? (
+                                    /* CAROUSEL VIEW FOR 'ALL POSTS' */
+                                    <>
+                                        <button className="carousel-button left" onClick={headerScrollLeft} aria-label="Scroll left">
+                                            <i className="fas fa-chevron-left"></i>
+                                        </button>
 
-                                {!loading && !error && displayPosts.map((post, index) => (
-                                    <div key={index} className="blog-card" data-categories={post.autoCategories.join(',')}>
-                                        <div className="blog-card-date">{formatDate(post.pubDate)}</div>
-                                        <h3 className="blog-card-title">
-                                            <a href={post.link} target="_blank" rel="noopener noreferrer">{post.title}</a>
-                                        </h3>
-                                        <p className="blog-card-excerpt">{stripHTML(post.description)}</p>
-                                        <div className="blog-card-categories">
-                                            {post.categories && post.categories.slice(0, 3).map((cat, i) => (
-                                                <span key={i} className="category-tag">{cat}</span>
-                                            ))}
-                                            {post.autoCategories.map((cat, i) => (
-                                                <span key={`auto-${i}`} className="category-tag">{cat.toUpperCase()}</span>
+                                        <div className="blog-grid" ref={scrollRef}>
+                                            {displayPosts.map((post, index) => (
+                                                <div key={index} className="blog-card" data-categories={post.autoCategories.join(',')}>
+                                                    <div className="blog-card-date">{formatDate(post.pubDate)}</div>
+                                                    <h3 className="blog-card-title">
+                                                        <a href={post.link} target="_blank" rel="noopener noreferrer">{post.title}</a>
+                                                    </h3>
+                                                    <p className="blog-card-excerpt">{stripHTML(post.description)}</p>
+                                                    <div className="blog-card-categories">
+                                                        {post.categories && post.categories.slice(0, 3).map((cat, i) => (
+                                                            <span key={i} className="category-tag">{cat}</span>
+                                                        ))}
+                                                        {post.autoCategories.map((cat, i) => (
+                                                            <span key={`auto-${i}`} className="category-tag">{cat.toUpperCase()}</span>
+                                                        ))}
+                                                    </div>
+                                                </div>
                                             ))}
                                         </div>
-                                    </div>
-                                ))}
-                            </div>
 
-                            <button className="carousel-button right" onClick={headerScrollRight} aria-label="Scroll right">
-                                <i className="fas fa-chevron-right"></i>
-                            </button>
+                                        <button className="carousel-button right" onClick={headerScrollRight} aria-label="Scroll right">
+                                            <i className="fas fa-chevron-right"></i>
+                                        </button>
+                                    </>
+                                ) : (
+                                    /* STATIC GRID VIEW FOR CATEGORIES */
+                                    <div className="blog-grid-static">
+                                        {displayPosts.map((post, index) => (
+                                            <div key={index} className="blog-card" data-categories={post.autoCategories.join(',')}>
+                                                <div className="blog-card-date">{formatDate(post.pubDate)}</div>
+                                                <h3 className="blog-card-title">
+                                                    <a href={post.link} target="_blank" rel="noopener noreferrer">{post.title}</a>
+                                                </h3>
+                                                <p className="blog-card-excerpt">{stripHTML(post.description)}</p>
+                                                <div className="blog-card-categories">
+                                                    {post.categories && post.categories.slice(0, 3).map((cat, i) => (
+                                                        <span key={i} className="category-tag">{cat}</span>
+                                                    ))}
+                                                    {post.autoCategories.map((cat, i) => (
+                                                        <span key={`auto-${i}`} className="category-tag">{cat.toUpperCase()}</span>
+                                                    ))}
+                                                </div>
+                                            </div>
+                                        ))}
+                                    </div>
+                                )
+                            )}
                         </>
                     )}
                 </div>
