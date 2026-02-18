@@ -42,7 +42,7 @@ function Resume() {
             {/* Header Section */}
             <div className="resume-header">
                 <div className="header-content">
-                    <Link to="/" className="btn btn-outline back-btn">
+                    <Link to="/" className="btn btn-primary back-btn">
                         <i className="fas fa-arrow-left"></i> Back to Homepage
                     </Link>
 
@@ -139,6 +139,8 @@ function Resume() {
 
                 .btn {
                     white-space: nowrap;
+                    min-width: 200px; /* Fixed width for uniformity */
+                    justify-content: center;
                 }
 
                 /* PDF Container */
