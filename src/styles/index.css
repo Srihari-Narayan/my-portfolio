@@ -2098,3 +2098,42 @@ a {
     scroll-behavior: auto !important;
     /* Prevent smooth scroll interfering with JS */
 }
+
+/* --- Static Grid Layout (Writesups Categories) --- */
+/* Desktop: 3 Columns */
+.blog-grid-static {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    /* Center the grid if items don't fill row */
+    gap: 2rem;
+    width: 100%;
+    padding: 1rem 0;
+}
+
+.blog-grid-static .blog-card {
+    flex: 0 0 calc(33.333% - 2rem);
+    /* 3 cards per row, accounting for gap */
+    width: calc(33.333% - 2rem);
+    min-width: 300px;
+    /* Prevent getting too squished */
+    margin: 0;
+}
+
+/* Mobile: Stack Vertically */
+@media (max-width: 1024px) {
+    .blog-grid-static .blog-card {
+        flex: 0 0 calc(50% - 2rem);
+        /* 2 cards on tablets */
+        width: calc(50% - 2rem);
+    }
+}
+
+@media (max-width: 768px) {
+    .blog-grid-static .blog-card {
+        flex: 0 0 100%;
+        /* 1 card on mobile */
+        width: 100%;
+        min-width: 100%;
+    }
+}
