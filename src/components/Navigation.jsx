@@ -12,11 +12,13 @@ function Navigation() {
     const sequences = [
         {
             command: "whoami",
-            output: "srihari"
+            output: "srihari",
+            duration: 3000
         },
         {
             command: "cat flag.txt",
-            output: "There are 5 flags hidden on this website. Can you find them all?"
+            output: "There are 5 flags hidden on this website. Can you find them all?",
+            duration: 8000
         }
     ];
 
@@ -41,15 +43,15 @@ function Navigation() {
             return typingInterval;
         };
 
-        const firstInterval = runAnimation();
+        const typingInterval = runAnimation();
 
-        const rotationInterval = setInterval(() => {
+        const rotationTimeout = setTimeout(() => {
             setCommandIndex(prev => (prev + 1) % sequences.length);
-        }, 10000);
+        }, sequences[commandIndex].duration);
 
         return () => {
-            clearInterval(firstInterval);
-            clearInterval(rotationInterval);
+            clearInterval(typingInterval);
+            clearTimeout(rotationTimeout);
         };
     }, [commandIndex]);
 
