@@ -275,12 +275,16 @@ a {
     max-width: 95vw;
     /* Responsive constrained */
     text-align: left;
+    white-space: nowrap;
+    /* Prevent wrapping */
 }
 
 .terminal-user {
     color: #4af626;
     /* Terminal Green */
     font-weight: bold;
+    font-family: inherit;
+    /* Force inheritance to fix font mismatch */
 }
 
 .terminal-at {
