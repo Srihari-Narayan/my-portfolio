@@ -270,8 +270,8 @@ a {
 .terminal-prompt {
     display: flex;
     align-items: center;
-    width: 90ch;
-    /* Matches length of the longest message to perfectly center it */
+    width: 80ch;
+    /* Matches exact length of the longest message (79ch + buffer) */
     max-width: 95vw;
     /* Responsive constrained */
     text-align: left;
