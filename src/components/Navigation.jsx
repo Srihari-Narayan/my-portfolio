@@ -11,8 +11,7 @@ function Navigation() {
 
     const sequences = [
         {
-            command: "cat flag.txt",
-            output: "🚩 CTF Challenge: There are 5 hidden flags scattered throughout this website. Can you find them all?"
+            output: "CTF Challenge: There are 5 hidden flags scattered throughout this website. Can you find them all?"
         },
         {
             command: "whoami",
