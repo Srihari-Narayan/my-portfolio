@@ -270,8 +270,8 @@ a {
 .terminal-prompt {
     display: flex;
     align-items: center;
-    width: 1100px;
-    /* Fixed width to prevent jumping when text grows */
+    width: 90ch;
+    /* Matches length of the longest message to perfectly center it */
     max-width: 95vw;
     /* Responsive constrained */
     text-align: left;
