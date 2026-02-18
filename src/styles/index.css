@@ -259,8 +259,8 @@ a {
     padding: 0.5rem 1rem;
     font-size: 0.9rem;
     margin-top: 0.5rem;
-    font-family: 'Courier New', Courier, monospace;
-    /* Enforce Kali-like monospace */
+    font-family: 'Consolas', 'Monaco', 'Andale Mono', 'Ubuntu Mono', monospace;
+    /* Modern Terminal Font (Sans-Serif Mono) */
     border-bottom: 1px solid rgba(220, 20, 60, 0.5);
     display: flex;
     justify-content: center;
