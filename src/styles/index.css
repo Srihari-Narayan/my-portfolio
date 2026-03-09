@@ -2138,35 +2138,17 @@ a {
     }
 }
 
-/* --- Contact Form File Input --- */
-.file-input-label {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-    padding: 1rem;
-    background: var(--color-bg);
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius-sm);
-    color: var(--color-text-secondary);
-    cursor: pointer;
-    transition: all var(--transition-base);
-    font-size: 0.9rem;
-    margin-bottom: 0.5rem;
-}
-
-.file-input-label:hover {
-    border-color: var(--color-red-light);
-    color: var(--color-white);
-    background: rgba(220, 20, 60, 0.1);
-}
-
-.file-input-hidden {
-    display: none;
-}
-
-.file-error-msg {
+/* --- Contact Form Hardening --- */
+.input-error {
     color: #ef4444;
     font-size: 0.8rem;
-    margin-top: -0.25rem;
-    margin-bottom: 0.5rem;
+    margin-top: 0.25rem;
 }
+
+.form-input.error {
+    border-color: #ef4444;
+}
+
+.char-count {
+    transition: color 0.3s ease;
+}
