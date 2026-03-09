@@ -21,11 +21,10 @@ function Contact() {
     const [formData, setFormData] = React.useState({
         name: '',
         email: '',
-        message: '',
-        attachment: null
+        message: ''
     });
 
-    const [fileError, setFileError] = React.useState('');
+    const [errors, setErrors] = React.useState({});
 
     const [status, setStatus] = React.useState('idle'); // idle, submitting, success, error
 
@@ -34,41 +33,26 @@ function Contact() {
             ...formData,
             [e.target.name]: e.target.value
         });
-    };
-
-    const handleFileChange = (e) => {
-        const file = e.target.files[0];
-        setFileError('');
-
-        if (file) {
-            // Whitelist extensions
-            const allowedExtensions = ['pdf', 'jpg', 'jpeg', 'png'];
-            const fileExtension = file.name.split('.').pop().toLowerCase();
-            
-            if (!allowedExtensions.includes(fileExtension)) {
-                setFileError('Invalid file type. Only PDF, JPG, and PNG are allowed.');
-                e.target.value = ''; // Clear input
-                setFormData({ ...formData, attachment: null });
-                return;
-            }
-
-            // Size limit (5MB)
-            if (file.size > 5 * 1024 * 1024) {
-                setFileError('File size exceeds 5MB limit.');
-                e.target.value = ''; // Clear input
-                setFormData({ ...formData, attachment: null });
-                return;
-            }
-
-            setFormData({
-                ...formData,
-                attachment: file
-            });
+        // Clear error when user types
+        if (errors[e.target.name]) {
+            setErrors({ ...errors, [e.target.name]: '' });
         }
     };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        
+        // Strict Client-side Validation (Hardening against manipulation)
+        const newErrors = {};
+        if (formData.name.length > 100) newErrors.name = "Name too long";
+        if (formData.email.length > 100) newErrors.email = "Email too long";
+        if (formData.message.length > 3000) newErrors.message = "Message too long";
+        
+        if (Object.keys(newErrors).length > 0) {
+            setErrors(newErrors);
+            return;
+        }
+
         setStatus('submitting');
 
         const formId = import.meta.env.VITE_FORMSPREE_ID;
@@ -79,27 +63,29 @@ function Contact() {
         }
 
         try {
-            const finalData = new FormData();
-            finalData.append('name', formData.name);
-            finalData.append('email', formData.email);
-            finalData.append('message', formData.message);
-            if (formData.attachment) {
-                finalData.append('attachment', formData.attachment);
-            }
+            // Strict Whitelisting: Only send exactly what is expected
+            const payload = {
+                name: formData.name.substring(0, 100),
+                email: formData.email.substring(0, 100),
+                message: formData.message.substring(0, 3000),
+                // Formspree honeypot support
+                _gotcha: e.target._gotcha?.value || "" 
+            };
 
             const response = await fetch(`https://formspree.io/f/${formId}`, {
                 method: 'POST',
                 headers: {
+                    'Content-Type': 'application/json',
                     'Accept': 'application/json'
                 },
-                body: finalData
+                body: JSON.stringify(payload)
             });
 
             if (response.ok) {
                 setStatus('success');
-                setFormData({ name: '', email: '', message: '', attachment: null });
-                setFileError('');
-                setTimeout(() => setStatus('idle'), 5000); // Reset after 5 seconds
+                setFormData({ name: '', email: '', message: '' });
+                setErrors({});
+                setTimeout(() => setStatus('idle'), 5000);
             } else {
                 setStatus('error');
             }
@@ -160,9 +146,11 @@ function Contact() {
                                             value={formData.name}
                                             onChange={handleChange}
                                             required
-                                            className="form-input"
+                                            maxLength="100"
+                                            className={`form-input ${errors.name ? 'error' : ''}`}
                                             disabled={status === 'submitting'}
                                         />
+                                        {errors.name && <p className="input-error">{errors.name}</p>}
                                     </div>
                                     <div className="form-group">
                                         <input
@@ -172,26 +160,15 @@ function Contact() {
                                             value={formData.email}
                                             onChange={handleChange}
                                             required
-                                            className="form-input"
+                                            maxLength="100"
+                                            className={`form-input ${errors.email ? 'error' : ''}`}
                                             disabled={status === 'submitting'}
                                         />
+                                        {errors.email && <p className="input-error">{errors.email}</p>}
                                     </div>
-                                    <div className="form-group">
-                                        <label htmlFor="attachment" className="file-input-label">
-                                            <i className="fas fa-paperclip"></i>
-                                            {formData.attachment ? formData.attachment.name : 'Attach File (PDF, PNG, JPG - Max 5MB)'}
-                                        </label>
-                                        <input
-                                            type="file"
-                                            id="attachment"
-                                            name="attachment"
-                                            onChange={handleFileChange}
-                                            accept=".pdf,.png,.jpg,.jpeg"
-                                            className="file-input-hidden"
-                                            disabled={status === 'submitting'}
-                                        />
-                                        {fileError && <p className="file-error-msg">{fileError}</p>}
-                                    </div>
+                                    
+                                    {/* Honeypot field for bot protection */}
+                                    <input type="text" name="_gotcha" style={{ display: 'none' }} tabIndex="-1" autoComplete="off" />
 
                                     <div className="form-group">
                                         <textarea
@@ -200,10 +177,15 @@ function Contact() {
                                             value={formData.message}
                                             onChange={handleChange}
                                             required
-                                            className="form-input form-textarea"
-                                            rows="4"
+                                            maxLength="3000"
+                                            className={`form-input form-textarea ${errors.message ? 'error' : ''}`}
+                                            rows="5"
                                             disabled={status === 'submitting'}
                                         ></textarea>
+                                        {errors.message && <p className="input-error">{errors.message}</p>}
+                                        <div className="char-count" style={{ fontSize: '0.75rem', color: '#666', textAlign: 'right' }}>
+                                            {formData.message.length}/3000
+                                        </div>
                                     </div>
 
                                     {status === 'error' && (
