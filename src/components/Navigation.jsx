@@ -112,7 +112,6 @@ function Navigation() {
                     {!isMobile && (
                         <>
                             <li><Link to="/submit-flags">Submit Flags</Link></li>
-                            <li><Link to="/admin">Admin Panel</Link></li>
                         </>
                     )}
                 </ul>

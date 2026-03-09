@@ -4,3 +4,6 @@
 # Congratulations on checking robots.txt!
 # flag{I_should_have_removed_robots.txt}
 
+User-agent: *
+Disallow: /admin
+
