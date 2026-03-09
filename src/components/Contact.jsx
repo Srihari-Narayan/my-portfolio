@@ -21,8 +21,11 @@ function Contact() {
     const [formData, setFormData] = React.useState({
         name: '',
         email: '',
-        message: ''
+        message: '',
+        attachment: null
     });
+
+    const [fileError, setFileError] = React.useState('');
 
     const [status, setStatus] = React.useState('idle'); // idle, submitting, success, error
 
@@ -31,6 +34,37 @@ function Contact() {
             ...formData,
             [e.target.name]: e.target.value
         });
+    };
+
+    const handleFileChange = (e) => {
+        const file = e.target.files[0];
+        setFileError('');
+
+        if (file) {
+            // Whitelist extensions
+            const allowedExtensions = ['pdf', 'jpg', 'jpeg', 'png'];
+            const fileExtension = file.name.split('.').pop().toLowerCase();
+            
+            if (!allowedExtensions.includes(fileExtension)) {
+                setFileError('Invalid file type. Only PDF, JPG, and PNG are allowed.');
+                e.target.value = ''; // Clear input
+                setFormData({ ...formData, attachment: null });
+                return;
+            }
+
+            // Size limit (5MB)
+            if (file.size > 5 * 1024 * 1024) {
+                setFileError('File size exceeds 5MB limit.');
+                e.target.value = ''; // Clear input
+                setFormData({ ...formData, attachment: null });
+                return;
+            }
+
+            setFormData({
+                ...formData,
+                attachment: file
+            });
+        }
     };
 
     const handleSubmit = async (e) => {
@@ -45,17 +79,26 @@ function Contact() {
         }
 
         try {
+            const finalData = new FormData();
+            finalData.append('name', formData.name);
+            finalData.append('email', formData.email);
+            finalData.append('message', formData.message);
+            if (formData.attachment) {
+                finalData.append('attachment', formData.attachment);
+            }
+
             const response = await fetch(`https://formspree.io/f/${formId}`, {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Accept': 'application/json'
                 },
-                body: JSON.stringify(formData)
+                body: finalData
             });
 
             if (response.ok) {
                 setStatus('success');
-                setFormData({ name: '', email: '', message: '' });
+                setFormData({ name: '', email: '', message: '', attachment: null });
+                setFileError('');
                 setTimeout(() => setStatus('idle'), 5000); // Reset after 5 seconds
             } else {
                 setStatus('error');
@@ -134,6 +177,23 @@ function Contact() {
                                         />
                                     </div>
                                     <div className="form-group">
+                                        <label htmlFor="attachment" className="file-input-label">
+                                            <i className="fas fa-paperclip"></i>
+                                            {formData.attachment ? formData.attachment.name : 'Attach File (PDF, PNG, JPG - Max 5MB)'}
+                                        </label>
+                                        <input
+                                            type="file"
+                                            id="attachment"
+                                            name="attachment"
+                                            onChange={handleFileChange}
+                                            accept=".pdf,.png,.jpg,.jpeg"
+                                            className="file-input-hidden"
+                                            disabled={status === 'submitting'}
+                                        />
+                                        {fileError && <p className="file-error-msg">{fileError}</p>}
+                                    </div>
+
+                                    <div className="form-group">
                                         <textarea
                                             name="message"
                                             placeholder="Your Message"
@@ -141,7 +201,7 @@ function Contact() {
                                             onChange={handleChange}
                                             required
                                             className="form-input form-textarea"
-                                            rows="5"
+                                            rows="4"
                                             disabled={status === 'submitting'}
                                         ></textarea>
                                     </div>
