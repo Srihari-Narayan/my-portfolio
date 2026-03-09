@@ -38,7 +38,7 @@ export function useMediumFeed(username) {
                         if (title.includes('hackthebox') || title.includes('htb') ||
                             title.includes('tryhackme') || title.includes('thm') ||
                             title.includes('vulnhub') || title.includes('machine') || 
-                            title.includes('writeup') || content.includes('walkthrough')) {
+                            content.includes('walkthrough') || content.includes('playbook')) {
                             categories.push('machines');
                         }
 

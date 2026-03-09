@@ -22,7 +22,7 @@ function Writeups() {
         // Also check Medium's native tags for keywords
         const tags = (post.categories || []).map(c => c.toLowerCase());
         if (activeFilter === 'machines') {
-            return tags.some(t => t.includes('htb') || t.includes('tryhackme') || t.includes('machine') || t.includes('walkthrough'));
+            return tags.some(t => t === 'htb' || t === 'tryhackme' || t === 'vulnhub' || t.includes('machine') || t.includes('walkthrough') || t.includes('playbook'));
         }
         if (activeFilter === 'ctf') {
             return tags.some(t => t.includes('ctf') || t.includes('challenge'));
