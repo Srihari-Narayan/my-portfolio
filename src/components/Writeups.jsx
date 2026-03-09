@@ -15,9 +15,23 @@ function Writeups() {
 
     const filteredPosts = posts.filter(post => {
         if (activeFilter === 'all') return true;
-        // The API might categorize them differently, relying on manual check for now
-        // Assuming 'ctf' filter maps to actual CTF writeups if available
-        return post.autoCategories.includes(activeFilter);
+        
+        // Check our auto-detected categories
+        if (post.autoCategories.includes(activeFilter)) return true;
+
+        // Also check Medium's native tags for keywords
+        const tags = (post.categories || []).map(c => c.toLowerCase());
+        if (activeFilter === 'machines') {
+            return tags.some(t => t.includes('htb') || t.includes('tryhackme') || t.includes('machine') || t.includes('walkthrough'));
+        }
+        if (activeFilter === 'ctf') {
+            return tags.some(t => t.includes('ctf') || t.includes('challenge'));
+        }
+        if (activeFilter === 'certs') {
+            return tags.some(t => t.includes('cert') || t.includes('oscp') || t.includes('ejpt'));
+        }
+
+        return false;
     });
 
     // For 'all' filter: Duplicate posts for infinite effect (3 sets)
