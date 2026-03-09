@@ -119,3 +119,8 @@ dist
 
 # Broken files
 nul
+
+# IDE/Tooling
+.claude/
+.idea/
+.vscode/

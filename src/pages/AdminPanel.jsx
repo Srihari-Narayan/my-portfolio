@@ -1,6 +1,20 @@
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import CTFBanner from '../components/CTFBanner';
 
 function AdminPanel() {
+    // Mobile Check
+    const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+    useEffect(() => {
+        const handleResize = () => setIsMobile(window.innerWidth < 768);
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
+
+    if (isMobile) {
+        return <CTFBanner />;
+    }
+
     return (
         <div className="admin-container">
             <div className="admin-warning">

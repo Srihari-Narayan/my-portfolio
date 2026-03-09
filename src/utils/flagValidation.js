@@ -4,7 +4,8 @@ export const validFlagHashes = [
     'f94efe5e52272d3ac586630ce056c86698b78c7d95150acd695e7d37ed30e11b', // Flag 2
     '385fba051ba1ddee81001373f562e7121a4ac7d5da5adc6d0318caf582be6ab1', // Flag 3
     '4deaa1d9febd66ef41f5dbcf726d33be4b351abed966806ecfa1258539b78a13', // Flag 4
-    '3487251e4196e918654cadba8b9e662c983b4184c371e19a3a4bd536670ffa50'  // Flag 5
+    '3487251e4196e918654cadba8b9e662c983b4184c371e19a3a4bd536670ffa50', // Flag 5
+    '4c347d1c26b5dbf4dd3513a8fc291ce677e494b79187209f387350c63d5f7dd2'  // Flag 6 (PDF Metadata)
 ];
 
 // SHA-256 hash function

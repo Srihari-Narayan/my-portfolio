@@ -1,9 +1,32 @@
 import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import toast, { Toaster } from 'react-hot-toast';
 import { validFlagHashes, sha256, getSubmittedFlags, saveSubmittedFlags } from '../utils/flagValidation';
+import CTFBanner from '../components/CTFBanner';
 
 function SubmitFlags() {
+    // Mobile Check
+    const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+    useEffect(() => {
+        const handleResize = () => setIsMobile(window.innerWidth < 768);
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
+
+    const [flags, setFlags] = useState({
+        flag1: '',
+        flag2: '',
+        flag3: '',
+        flag4: '',
+        flag5: '',
+        flag6: ''
+    });
+
+    const location = useLocation();
+
+    if (isMobile) {
+        return <CTFBanner />;
+    }
     const [flagInput, setFlagInput] = useState('');
     const [output, setOutput] = useState('');
     const [submittedFlags, setSubmittedFlags] = useState([]);
@@ -37,8 +60,8 @@ function SubmitFlags() {
                 setSubmittedFlags(newSubmittedFlags);
                 saveSubmittedFlags(newSubmittedFlags);
 
-                if (newSubmittedFlags.length === 5) {
-                    toast.success('🎉 Congratulations! You found all 5 flags!', {
+                if (newSubmittedFlags.length === 6) {
+                    toast.success('🎉 Congratulations! You found all 6 flags!', {
                         duration: 5000,
                         style: {
                             background: '#00ff00',
@@ -48,10 +71,10 @@ function SubmitFlags() {
                     });
                     setOutput('<p style="color: #00ff00; font-size: 1.2rem;">✓ Flag accepted! 🎉<br/><br/>ALL FLAGS FOUND! You\'re a true CTF champion!</p>');
                 } else {
-                    toast.success(`🎉 Good job! Valid flag submitted! (${newSubmittedFlags.length}/5)`, {
+                    toast.success(`🎉 Good job! Valid flag submitted! (${newSubmittedFlags.length}/6)`, {
                         duration: 4000,
                     });
-                    setOutput(`<p style="color: #00ff00;">✓ Flag accepted! (${newSubmittedFlags.length}/5)</p>`);
+                    setOutput(`<p style="color: #00ff00;">✓ Flag accepted! (${newSubmittedFlags.length}/6)</p>`);
                 }
             }
 
@@ -98,9 +121,9 @@ function SubmitFlags() {
                 <div id="output" dangerouslySetInnerHTML={{ __html: output }}></div>
 
                 <div className="progress-info">
-                    <h3>Progress: <span id="progress">{submittedFlags.length}/5</span> Flags Found</h3>
+                    <h3>Progress: <span id="progress">{submittedFlags.length}/6</span> Flags Found</h3>
                     <p style={{ color: 'var(--color-text-secondary)', fontSize: '0.9rem', marginTop: '0.5rem' }}>
-                        Can you find all 5 hidden flags?
+                        Can you find all 6 hidden flags?
                     </p>
                 </div>
             </div>

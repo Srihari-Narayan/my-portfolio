@@ -17,7 +17,7 @@ function Navigation() {
         },
         {
             command: "cat flag.txt",
-            output: "There are 5 flags hidden on this website. Can you find them all?",
+            output: "There are 6 flags hidden on this website. Can you find them all?",
             duration: 8000
         }
     ];
