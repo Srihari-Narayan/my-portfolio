@@ -35,13 +35,14 @@ export function useMediumFeed(username) {
                         }
 
                         // 2. Check for Machine Walkthroughs
-                        if (title.includes('hackthebox') || title.includes('tryhackme') ||
-                            title.includes('machine') || content.includes('walkthrough')) {
+                        if (title.includes('hackthebox') || title.includes('htb') ||
+                            title.includes('tryhackme') || title.includes('thm') ||
+                            title.includes('vulnhub') || title.includes('machine') || 
+                            title.includes('writeup') || content.includes('walkthrough')) {
                             categories.push('machines');
                         }
 
                         // 3. Check for CTF (Only if not already classified as a Cert, or if explicitly desired)
-                        // If it's a cert review, we probably don't want it in the generic "CTF" bucket even if it mentions CTF
                         if (!categories.includes('certs') && (title.includes('ctf') || content.includes('ctf'))) {
                             categories.push('ctf');
                         }

@@ -193,29 +193,22 @@ function Writeups() {
                         }
                     }}
                 >
-                    {(activeFilter === 'machines') ? (
-                        <div className="stay-tuned-msg fade-in">
-                            <i className="fas fa-hourglass-half"></i>
-                            <p>Stay tuned for future articles</p>
+                    {loading && (
+                        <div className="loading-spinner">
+                            <i className="fas fa-circle-notch fa-spin"></i>
+                            <p>Loading posts from Medium...</p>
                         </div>
-                    ) : (
-                        <>
-                            {loading && (
-                                <div className="loading-spinner">
-                                    <i className="fas fa-circle-notch fa-spin"></i>
-                                    <p>Loading posts from Medium...</p>
-                                </div>
-                            )}
+                    )}
 
-                            {error && (
-                                <div className="loading-spinner">
-                                    <i className="fas fa-exclamation-circle"></i>
-                                    <p>{error}. Please visit Medium directly.</p>
-                                </div>
-                            )}
+                    {error && (
+                        <div className="loading-spinner">
+                            <i className="fas fa-exclamation-circle"></i>
+                            <p>{error}. Please visit Medium directly.</p>
+                        </div>
+                    )}
 
-                            {!loading && !error && (
-                                activeFilter === 'all' ? (
+                    {!loading && !error && (
+                        activeFilter === 'all' ? (
                                     /* CAROUSEL VIEW FOR 'ALL POSTS' */
                                     <>
                                         <button className="carousel-button left" onClick={headerScrollLeft} aria-label="Scroll left">
@@ -267,9 +260,7 @@ function Writeups() {
                                             </div>
                                         ))}
                                     </div>
-                                )
-                            )}
-                        </>
+                            )
                     )}
                 </div>
 
