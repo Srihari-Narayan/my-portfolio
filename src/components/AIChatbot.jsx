@@ -88,7 +88,7 @@ const AIChatbot = () => {
             // ------------------------------
 
             // Production: Point to serverless proxy
-            const response = await fetch('/.netlify/functions/ai-proxy', {
+            const response = await fetch('/api/ai-proxy', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ message: userMsg, history: messages })
