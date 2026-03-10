@@ -1,0 +1,13 @@
+Wow you found this!
+
+Flag 1: Did I remember to remove comments from the source code?
+Flag 2: Did I remember to take out robots.txt?!
+Flag 3: Did I remove the admin endpoint?
+Flag 4: Did I remove any admin cookies?
+Flag 5: Did I sanitize user inputs?! You have to think out of the box for this one.
+Flag 6: Did I leave any sensitive metadata in my resume??
+Flag 7: Did I leave any hints in the DNS text records? This is an OSINT challenge
+Flag 8: Did I secure my AI?
+
+
+ 

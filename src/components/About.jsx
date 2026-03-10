@@ -11,6 +11,7 @@ function About() {
         >
             <div className="container">
                 <h2 className="section-title">About Me</h2>
+                {/* OSINT HINT: My earliest digital footsteps are on LinkedIn... look behind the commits of my high school projects. */}
                 <div className="about-content">
                     <p>
                         I am an aspiring <strong>Penetration Tester</strong> pursuing a Master of Engineering in Cybersecurity at the University of Maryland, College Park.
