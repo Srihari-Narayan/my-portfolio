@@ -92,7 +92,11 @@ const AIChatbot = () => {
             if (data.error) throw new Error(data.error);
             setMessages(prev => [...prev, { role: 'assistant', content: data.reply }]);
         } catch (error) {
-            setMessages(prev => [...prev, { role: 'assistant', content: 'ERROR: Uplink interrupted. Please verify your local .env or check console.' }]);
+            const isDev = import.meta.env.DEV;
+            const errorMsg = isDev 
+                ? 'ERROR: Uplink interrupted. Please verify your local .env or check console.'
+                : 'ERROR: Uplink interrupted. System administrator (Srihari) may need to verify API limits or Netlify logs.';
+            setMessages(prev => [...prev, { role: 'assistant', content: errorMsg }]);
             console.error('AI Error:', error);
         } finally {
             setIsLoading(false);
