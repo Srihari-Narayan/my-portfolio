@@ -11,6 +11,13 @@ export async function onRequest(context) {
         // Cloudflare uses env.VARIABLE_NAME
         const apiKey = env.VITE_GROQ_API_KEY;
 
+        if (!apiKey) {
+            return new Response(JSON.stringify({ error: 'API Key missing in Cloudflare environment variables.' }), {
+                status: 401,
+                headers: { 'Content-Type': 'application/json' }
+            });
+        }
+
         const systemPrompt = `
             You are "Chiti Babu", model T-800 v.1. Introduction: "Cyberdyne Systems 101, T-800 v.1 a.k.a Chiti The Robot".
             

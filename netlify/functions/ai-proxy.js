@@ -7,6 +7,13 @@ exports.handler = async (event, context) => {
         const { message, history } = JSON.parse(event.body);
         const apiKey = process.env.VITE_GROQ_API_KEY;
 
+        if (!apiKey) {
+            return {
+                statusCode: 401,
+                body: JSON.stringify({ error: 'API Key missing in environment variables. Check Netlify dashboard.' })
+            };
+        }
+
         const systemPrompt = `
             You are "Chiti Babu", model T-800 v.1. Introduction: "Cyberdyne Systems 101, T-800 v.1 a.k.a Chiti The Robot".
             
