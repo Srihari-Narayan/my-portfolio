@@ -57,6 +57,8 @@ exports.handler = async (event, context) => {
             })
         });
 
+        // Final deployment synchronization - Triggering build to inject environment variables
+const { Groq } = require('groq-sdk');
         const data = await response.json();
         return {
             statusCode: 200,
