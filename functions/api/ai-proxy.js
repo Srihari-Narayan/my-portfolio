@@ -8,11 +8,14 @@ export async function onRequest(context) {
     try {
         const { message, history } = await request.json();
         
-        // Cloudflare uses env.VARIABLE_NAME
-        const apiKey = env.VITE_GROQ_API_KEY;
+        // Try multiple possible variable names for compatibility
+        const apiKey = env.VITE_GROQ_API_KEY || env.GROQ_API_KEY;
 
         if (!apiKey) {
-            return new Response(JSON.stringify({ error: 'API Key missing in Cloudflare environment variables.' }), {
+            return new Response(JSON.stringify({ 
+                error: 'API Key missing in Cloudflare environment variables.',
+                debug: { keys_found: Object.keys(env) } 
+            }), {
                 status: 401,
                 headers: { 'Content-Type': 'application/json' }
             });
