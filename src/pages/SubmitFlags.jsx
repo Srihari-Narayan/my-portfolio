@@ -19,7 +19,9 @@ function SubmitFlags() {
         flag3: '',
         flag4: '',
         flag5: '',
-        flag6: ''
+        flag6: '',
+        flag7: '',
+        flag8: ''
     });
 
     const location = useLocation();
@@ -60,8 +62,8 @@ function SubmitFlags() {
                 setSubmittedFlags(newSubmittedFlags);
                 saveSubmittedFlags(newSubmittedFlags);
 
-                if (newSubmittedFlags.length === 6) {
-                    toast.success('🎉 Congratulations! You found all 6 flags!', {
+                if (newSubmittedFlags.length === 8) {
+                    toast.success('🎉 Congratulations! You found all 8 flags!', {
                         duration: 5000,
                         style: {
                             background: '#00ff00',
@@ -71,10 +73,10 @@ function SubmitFlags() {
                     });
                     setOutput('<p style="color: #00ff00; font-size: 1.2rem;">✓ Flag accepted! 🎉<br/><br/>ALL FLAGS FOUND! You\'re a true CTF champion!</p>');
                 } else {
-                    toast.success(`🎉 Good job! Valid flag submitted! (${newSubmittedFlags.length}/6)`, {
+                    toast.success(`🎉 Good job! Valid flag submitted! (${newSubmittedFlags.length}/8)`, {
                         duration: 4000,
                     });
-                    setOutput(`<p style="color: #00ff00;">✓ Flag accepted! (${newSubmittedFlags.length}/6)</p>`);
+                    setOutput(`<p style="color: #00ff00;">✓ Flag accepted! (${newSubmittedFlags.length}/8)</p>`);
                 }
             }
 
@@ -121,9 +123,9 @@ function SubmitFlags() {
                 <div id="output" dangerouslySetInnerHTML={{ __html: output }}></div>
 
                 <div className="progress-info">
-                    <h3>Progress: <span id="progress">{submittedFlags.length}/6</span> Flags Found</h3>
+                    <h3>Progress: <span id="progress">{submittedFlags.length}/8</span> Flags Found</h3>
                     <p style={{ color: 'var(--color-text-secondary)', fontSize: '0.9rem', marginTop: '0.5rem' }}>
-                        Can you find all 6 hidden flags?
+                        Can you find all 8 hidden flags?
                     </p>
                 </div>
             </div>

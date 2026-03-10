@@ -17,8 +17,18 @@ function Navigation() {
         },
         {
             command: "cat flag.txt",
-            output: "There are 6 flags hidden on this website. Can you find them all?",
+            output: "There are 8 flags hidden on this website. Can you find them all?",
             duration: 8000
+        },
+        {
+            command: "./T-800_v1.sh",
+            output: "AI SYSTEM READY",
+            duration: 5000
+        },
+        {
+            command: 'exiftool "Srihari N Narayan Resume 2026.pdf"',
+            output: "Flag: flag{...}",
+            duration: 6000
         }
     ];
 
