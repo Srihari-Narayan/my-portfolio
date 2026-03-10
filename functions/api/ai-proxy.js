@@ -8,8 +8,11 @@ export async function onRequest(context) {
     try {
         const { message, history } = await request.json();
         
-        // Try multiple possible variable names for compatibility
-        const apiKey = env.VITE_GROQ_API_KEY || env.GROQ_API_KEY;
+        // Try multiple possible variable names and handle potential hidden spaces in key names
+        const apiKey = env.VITE_GROQ_API_KEY || 
+                       env.GROQ_API_KEY || 
+                       env['VITE_GROQ_API_KEY '] || 
+                       Object.entries(env).find(([k]) => k.trim() === 'VITE_GROQ_API_KEY')?.[1];
 
         if (!apiKey) {
             return new Response(JSON.stringify({ 
