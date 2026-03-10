@@ -15,6 +15,12 @@ const AIChatbot = () => {
     };
 
     useEffect(() => {
+        const handleOpenChat = () => setIsOpen(true);
+        window.addEventListener('open-ai-chat', handleOpenChat);
+        return () => window.removeEventListener('open-ai-chat', handleOpenChat);
+    }, []);
+
+    useEffect(() => {
         scrollToBottom();
     }, [messages]);
 

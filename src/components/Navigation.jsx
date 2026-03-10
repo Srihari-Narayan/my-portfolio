@@ -117,6 +117,7 @@ function Navigation() {
                     )}
                     {!isHome && <li><Link to="/">Home</Link></li>}
                     <li><Link to="/resume">Resume</Link></li>
+                    <li><a href="#" onClick={(e) => { e.preventDefault(); window.dispatchEvent(new CustomEvent('open-ai-chat')); }}>Talk to AI</a></li>
 
                     {/* CTF Sections - Hidden on Mobile */}
                     {!isMobile && (
