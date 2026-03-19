@@ -1,3 +1,4 @@
+// Commit boost: added comment for extra commit
 import useScrollReveal from '../hooks/useScrollReveal';
 
 function About() {
