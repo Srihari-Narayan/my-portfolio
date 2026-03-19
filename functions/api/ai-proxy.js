@@ -1,5 +1,32 @@
+const rateLimitMap = new Map();
+
+function isRateLimited(ip) {
+  const now = Date.now();
+  const windowMs = 60 * 1000; // 1 minute
+  const maxRequests = 5;
+  const record = rateLimitMap.get(ip) || [];
+  // Remove timestamps older than window
+  const recent = record.filter(ts => now - ts < windowMs);
+  if (recent.length >= maxRequests) {
+    // Too many requests
+    rateLimitMap.set(ip, recent);
+    return true;
+  }
+  recent.push(now);
+  rateLimitMap.set(ip, recent);
+  return false;
+}
+
 export async function onRequest(context) {
     const { request, env } = context;
+    // Basic IP based rate limiting
+    const ip = request.headers.get('cf-connecting-ip') || request.headers.get('x-forwarded-for') || 'unknown';
+    if (isRateLimited(ip)) {
+      return new Response(JSON.stringify({ error: 'Rate limit exceeded. Try again later.' }), {
+        status: 429,
+        headers: { 'Content-Type': 'application/json' }
+      });
+    }
 
     if (request.method !== 'POST') {
         return new Response('Method Not Allowed', { status: 405 });
