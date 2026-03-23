@@ -35,10 +35,11 @@ export function useMediumFeed(username) {
                         }
 
                         // 2. Check for Machine Walkthroughs
-                        if (title.includes('hackthebox') || title.includes('htb') ||
+                        // Require 'walkthrough' in title to avoid catching certification/exam posts
+                        if (title.includes('walkthrough') &&
+                            (title.includes('hackthebox') || title.includes('htb') ||
                             title.includes('tryhackme') || title.includes('thm') ||
-                            title.includes('vulnhub') || title.includes('machine') || 
-                            content.includes('walkthrough') || content.includes('playbook')) {
+                            title.includes('vulnhub') || title.includes('machine'))) {
                             categories.push('machines');
                         }
 
