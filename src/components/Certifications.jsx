@@ -40,6 +40,12 @@ function Certifications() {
             image: 'https://api.accredible.com/v1/frontend/credential_website_embed_image/certificate/172345724'
         },
         {
+            title: 'C-AI/MLPen',
+            org: 'The SecOps Group',
+            link: 'https://drive.google.com/file/d/1mko9a7IPNlvCRG50oQ5YqAqTpRtJsHYB/view?usp=sharing',
+            image: '/images/c-aimlpen.png'
+        },
+        {
             title: 'Certified AppSec Practitioner',
             org: 'The SecOps Group',
             link: 'https://www.credential.net/bdac2b63-f035-4ef5-94fa-cf9480f16ae4?username=sriharinarayan',
