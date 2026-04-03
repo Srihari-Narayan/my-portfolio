@@ -42,7 +42,7 @@ function Certifications() {
         {
             title: 'C-AI/MLPen',
             org: 'The SecOps Group',
-            link: 'https://drive.google.com/file/d/1mko9a7IPNlvCRG50oQ5YqAqTpRtJsHYB/view?usp=sharing',
+            link: 'https://www.credential.net/a8a1f50c-6a85-42db-a764-bb6cb925b123?username=sriharinarayan',
             image: '/images/c-aimlpen.png'
         },
         {
