@@ -6,7 +6,7 @@ function Contact() {
     const contactMethods = [
         {
             name: 'srihari@umd.edu',
-            icon: 'fas fa-university',
+            icon: 'fas fa-envelope',
             url: 'mailto:srihari@umd.edu',
             type: 'email'
         },
@@ -18,83 +18,6 @@ function Contact() {
         }
     ];
 
-    const [formData, setFormData] = React.useState({
-        name: '',
-        email: '',
-        message: ''
-    });
-
-    const [errors, setErrors] = React.useState({});
-
-    const [status, setStatus] = React.useState('idle'); // idle, submitting, success, error
-
-    const handleChange = (e) => {
-        setFormData({
-            ...formData,
-            [e.target.name]: e.target.value
-        });
-        // Clear error when user types
-        if (errors[e.target.name]) {
-            setErrors({ ...errors, [e.target.name]: '' });
-        }
-    };
-
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        
-        // Strict Client-side Validation (Hardening against manipulation)
-        const newErrors = {};
-        if (formData.name.length > 100) newErrors.name = "Name too long";
-        if (formData.email.length > 100) newErrors.email = "Email too long";
-        if (formData.message.length > 3000) newErrors.message = "Message too long";
-        
-        if (Object.keys(newErrors).length > 0) {
-            setErrors(newErrors);
-            return;
-        }
-
-        setStatus('submitting');
-
-        const formId = import.meta.env.VITE_FORMSPREE_ID;
-        if (!formId) {
-            console.error("Formspree ID missing in environment variables");
-            setStatus('error');
-            return;
-        }
-
-        try {
-            // Strict Whitelisting: Only send exactly what is expected
-            const payload = {
-                name: formData.name.substring(0, 100),
-                email: formData.email.substring(0, 100),
-                message: formData.message.substring(0, 3000),
-                // Formspree honeypot support
-                _gotcha: e.target._gotcha?.value || "" 
-            };
-
-            const response = await fetch(`https://formspree.io/f/${formId}`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Accept': 'application/json'
-                },
-                body: JSON.stringify(payload)
-            });
-
-            if (response.ok) {
-                setStatus('success');
-                setFormData({ name: '', email: '', message: '' });
-                setErrors({});
-                setTimeout(() => setStatus('idle'), 5000);
-            } else {
-                setStatus('error');
-            }
-        } catch (error) {
-            console.error("Form submission error:", error);
-            setStatus('error');
-        }
-    };
-
     return (
         <section
             id="contact"
@@ -105,108 +28,22 @@ function Contact() {
                 <h2 className="section-title">Let's Connect</h2>
                 <p className="section-description">Feel free to reach out for collaborations, questions, or just to chat about security!</p>
 
-                <div className="contact-content-grid">
-                    <div className="contact-left">
-                        <div className="contact-methods-list">
-                            {contactMethods.map((method, index) => (
-                                <a
-                                    key={index}
-                                    href={method.url}
-                                    target={method.type === 'email' ? '_self' : '_blank'}
-                                    rel={method.type === 'email' ? '' : 'noopener noreferrer'}
-                                    className="contact-method-tab"
-                                >
-                                    <div className="contact-method-icon">
-                                        <i className={method.icon}></i>
-                                    </div>
-                                    <span className="contact-method-text">{method.name}</span>
-                                    <i className="fas fa-chevron-right arrow-icon"></i>
-                                </a>
-                            ))}
-                        </div>
-                    </div>
-
-                    <div className="contact-right">
-                        <form className="contact-form" onSubmit={handleSubmit}>
-                            <h3 className="form-title">Send a Message</h3>
-
-                            {status === 'success' ? (
-                                <div className="form-success-message" style={{ textAlign: 'center', padding: '2rem' }}>
-                                    <i className="fas fa-check-circle" style={{ fontSize: '3rem', color: '#4ade80', marginBottom: '1rem' }}></i>
-                                    <h4 style={{ color: 'white' }}>Message Sent!</h4>
-                                    <p style={{ color: '#94a3b8' }}>Thanks for reaching out. I'll get back to you soon.</p>
-                                </div>
-                            ) : (
-                                <>
-                                    <div className="form-group">
-                                        <input
-                                            type="text"
-                                            name="name"
-                                            placeholder="Your Name"
-                                            value={formData.name}
-                                            onChange={handleChange}
-                                            required
-                                            maxLength="100"
-                                            className={`form-input ${errors.name ? 'error' : ''}`}
-                                            disabled={status === 'submitting'}
-                                        />
-                                        {errors.name && <p className="input-error">{errors.name}</p>}
-                                    </div>
-                                    <div className="form-group">
-                                        <input
-                                            type="email"
-                                            name="email"
-                                            placeholder="Your Email"
-                                            value={formData.email}
-                                            onChange={handleChange}
-                                            required
-                                            maxLength="100"
-                                            className={`form-input ${errors.email ? 'error' : ''}`}
-                                            disabled={status === 'submitting'}
-                                        />
-                                        {errors.email && <p className="input-error">{errors.email}</p>}
-                                    </div>
-                                    
-                                    {/* Honeypot field for bot protection */}
-                                    <input type="text" name="_gotcha" style={{ display: 'none' }} tabIndex="-1" autoComplete="off" />
-
-                                    <div className="form-group">
-                                        <textarea
-                                            name="message"
-                                            placeholder="Your Message"
-                                            value={formData.message}
-                                            onChange={handleChange}
-                                            required
-                                            maxLength="3000"
-                                            className={`form-input form-textarea ${errors.message ? 'error' : ''}`}
-                                            rows="5"
-                                            disabled={status === 'submitting'}
-                                        ></textarea>
-                                        {errors.message && <p className="input-error">{errors.message}</p>}
-                                        <div className="char-count" style={{ fontSize: '0.75rem', color: '#666', textAlign: 'right' }}>
-                                            {formData.message.length}/3000
-                                        </div>
-                                    </div>
-
-                                    {status === 'error' && (
-                                        <p style={{ color: '#ef4444', marginBottom: '1rem' }}>Something went wrong. Please try again or email me directly.</p>
-                                    )}
-
-                                    <button
-                                        type="submit"
-                                        className="btn btn-primary submit-btn"
-                                        disabled={status === 'submitting'}
-                                    >
-                                        {status === 'submitting' ? (
-                                            <><i className="fas fa-spinner fa-spin"></i> Sending...</>
-                                        ) : (
-                                            <><i className="fas fa-paper-plane"></i> Send Message</>
-                                        )}
-                                    </button>
-                                </>
-                            )}
-                        </form>
-                    </div>
+                <div className="contact-methods-list" style={{ maxWidth: '600px', margin: '2rem auto 0 auto' }}>
+                    {contactMethods.map((method, index) => (
+                        <a
+                            key={index}
+                            href={method.url}
+                            target={method.type === 'email' ? '_self' : '_blank'}
+                            rel={method.type === 'email' ? '' : 'noopener noreferrer'}
+                            className="contact-method-tab"
+                        >
+                            <div className="contact-method-icon">
+                                <i className={method.icon}></i>
+                            </div>
+                            <span className="contact-method-text">{method.name}</span>
+                            <i className="fas fa-chevron-right arrow-icon"></i>
+                        </a>
+                    ))}
                 </div>
             </div>
         </section>
