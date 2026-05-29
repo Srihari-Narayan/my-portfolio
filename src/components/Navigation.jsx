@@ -108,14 +108,18 @@ function Navigation() {
         <nav className="navbar" style={navbarStyle}>
             <div className="container">
                 <ul className={`nav-links ${mobileMenuOpen ? 'active' : ''}`}>
-                    {isHome && (
+                    {isHome ? (
                         <>
                             <li><a href="#about" onClick={(e) => scrollToSection(e, '#about')}>About</a></li>
-                            <li><a href="#writeups" onClick={(e) => scrollToSection(e, '#writeups')}>Writeups</a></li>
+                            <li><Link to="/writeups">Writeups</Link></li>
                             <li><a href="#contact" onClick={(e) => scrollToSection(e, '#contact')}>Contact</a></li>
                         </>
+                    ) : (
+                        <>
+                            <li><Link to="/">Home</Link></li>
+                            <li><Link to="/writeups">Writeups</Link></li>
+                        </>
                     )}
-                    {!isHome && <li><Link to="/">Home</Link></li>}
                     <li><Link to="/resume">Resume</Link></li>
                     <li><a href="#" onClick={(e) => { e.preventDefault(); window.dispatchEvent(new CustomEvent('open-ai-chat')); }}>Talk to AI</a></li>
 

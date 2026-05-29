@@ -1,164 +1,18 @@
-import { useState, useEffect, useRef } from 'react';
-import { useMediumFeed } from '../hooks/useMediumFeed';
+import { Link } from 'react-router-dom';
 import useScrollReveal from '../hooks/useScrollReveal';
+import { writeups } from '../data/writeups';
 
 function Writeups() {
     const [revealRef, isVisible] = useScrollReveal();
-    const { posts, loading, error } = useMediumFeed('srihari.n.narayan');
-    const [activeFilter, setActiveFilter] = useState('all');
-    const scrollRef = useRef(null);
-    const [isPaused, setIsPaused] = useState(false);
 
-    const filterPosts = (filter) => {
-        setActiveFilter(filter);
-    };
-
-    const filteredPosts = posts.filter(post => {
-        if (activeFilter === 'all') return true;
-        
-        // Check our auto-detected categories
-        if (post.autoCategories.includes(activeFilter)) return true;
-
-        // Also check Medium's native tags for keywords
-        const tags = (post.categories || []).map(c => c.toLowerCase());
-        if (activeFilter === 'machines') {
-            const hasWalkthrough = tags.some(t => t.includes('walkthrough') || t.includes('playbook'));
-            const hasPlatform = tags.some(t => t === 'htb' || t === 'tryhackme' || t === 'vulnhub' || t.includes('machine'));
-            return hasWalkthrough && hasPlatform;
-        }
-        if (activeFilter === 'ctf') {
-            return tags.some(t => t.includes('ctf') || t.includes('challenge'));
-        }
-        if (activeFilter === 'certs') {
-            return tags.some(t => t.includes('cert') || t.includes('oscp') || t.includes('ejpt'));
-        }
-
-        return false;
-    });
-
-    // For 'all' filter: Duplicate posts for infinite effect (3 sets)
-    // For other filters: Just show the filtered posts (sorted by date desc)
-    const displayPosts = (filteredPosts.length > 0)
-        ? (activeFilter === 'all'
-            ? [...filteredPosts, ...filteredPosts, ...filteredPosts]
-            : [...filteredPosts].sort((a, b) => new Date(b.pubDate) - new Date(a.pubDate)))
-        : [];
-
-    // Initialize scroll position to the middle set (ONLY for 'all' filter)
-    useEffect(() => {
-        if (activeFilter === 'all' && scrollRef.current && displayPosts.length > 0) {
-            const scrollContainer = scrollRef.current;
-            // Wait for layout to settle slightly
-            setTimeout(() => {
-                // Approximate width of one set
-                const singleSetWidth = scrollContainer.scrollWidth / 3;
-                // Start at the beginning of the second set
-                if (scrollContainer.scrollLeft < 100) {
-                    scrollContainer.scrollLeft = singleSetWidth;
-                }
-            }, 100);
-        }
-    }, [displayPosts.length, activeFilter]);
-
-    // Infinite Scroll Logic (ONLY for 'all' filter)
-    useEffect(() => {
-        const scrollContainer = scrollRef.current;
-        // Re-enabled for mobile as requested (horizontal carousel)
-
-        if (activeFilter !== 'all' || !scrollContainer || loading || error || isPaused || filteredPosts.length === 0) return;
-
-        // Skip auto-scroll for the placeholder tabs
-        if (activeFilter === 'machines') return;
-
-        let animationFrameId;
-        // Use a variable to track sub-pixel movement
-        let scrollAccumulator = 0;
-        const scrollSpeed = 0.5; // Adjust this value to change speed (0.5 = half speed)
-
-        const scroll = () => {
-            if (scrollContainer) {
-                const singleSetWidth = scrollContainer.scrollWidth / 3;
-
-                // Accumulate fractional scroll amount
-                scrollAccumulator += scrollSpeed;
-
-                // When we have at least 1 pixel to scroll
-                if (scrollAccumulator >= 1) {
-                    const pixelsToScroll = Math.floor(scrollAccumulator);
-                    scrollContainer.scrollLeft += pixelsToScroll;
-                    scrollAccumulator -= pixelsToScroll;
-                }
-
-                // Wrap forward: If we reach end of 2nd set (start of 3rd), jump to end of 1st set (start of 2nd)
-                // Range 0..W..2W..3W
-                // Targeted range: W..2W
-                if (scrollContainer.scrollLeft >= 2 * singleSetWidth) {
-                    scrollContainer.scrollLeft = singleSetWidth;
-                }
-                // Wrap backward protection (though auto-scroll goes right)
-                // Just in case manual interaction pushed it too far left
-                else if (scrollContainer.scrollLeft <= 0) {
-                    scrollContainer.scrollLeft = singleSetWidth;
-                }
-            }
-            animationFrameId = requestAnimationFrame(scroll);
-        };
-
-        animationFrameId = requestAnimationFrame(scroll);
-
-        return () => {
-            cancelAnimationFrame(animationFrameId);
-        };
-    }, [isPaused, loading, error, filteredPosts, activeFilter]);
-
-
-    const headerScrollLeft = () => {
-        const scrollContainer = scrollRef.current;
-        if (scrollContainer) {
-            const singleSetWidth = scrollContainer.scrollWidth / 3;
-            const scrollAmount = 350;
-
-            // Check if we are too close to the start (in 1st set)
-            if (scrollContainer.scrollLeft < singleSetWidth * 0.5) {
-                // Jump forward to 2nd set
-                scrollContainer.scrollLeft += singleSetWidth;
-            }
-
-            scrollContainer.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
-        }
-    };
-
-    const headerScrollRight = () => {
-        const scrollContainer = scrollRef.current;
-        if (scrollContainer) {
-            const singleSetWidth = scrollContainer.scrollWidth / 3;
-            const scrollAmount = 350;
-
-            // Check if we are too close to the end (in 3rd set)
-            if (scrollContainer.scrollLeft > singleSetWidth * 2.5) {
-                // Jump back to 2nd set
-                scrollContainer.scrollLeft -= singleSetWidth;
-            }
-
-            scrollContainer.scrollBy({ left: scrollAmount, behavior: 'smooth' });
-        }
-    };
-
-    const formatDate = (dateString) => {
-        const date = new Date(dateString);
-        return date.toLocaleDateString('en-US', {
-            year: 'numeric',
-            month: 'short',
-            day: 'numeric'
-        });
-    };
-
-    const stripHTML = (html) => {
-        const tempDiv = document.createElement('div');
-        tempDiv.innerHTML = html;
-        const plainText = tempDiv.textContent || tempDiv.innerText || '';
-        return plainText.substring(0, 150) + '...';
-    };
+    // Select top 3 latest/pinned writeups for the homepage preview
+    const previewPosts = [...writeups]
+        .sort((a, b) => {
+            if (a.pinned && !b.pinned) return -1;
+            if (!a.pinned && b.pinned) return 1;
+            return new Date(b.date) - new Date(a.date);
+        })
+        .slice(0, 3);
 
     return (
         <section
@@ -168,123 +22,37 @@ function Writeups() {
         >
             <div className="container">
                 <h2 className="section-title">Writeups & Blog</h2>
-                <p className="section-description">CTF writeups, machine walkthroughs, and certification experiences from my Medium blog</p>
+                <p className="section-description">CTF writeups, machine walkthroughs, and certification experiences hosted locally on my portfolio</p>
 
-                {/* Filter Tabs */}
-                <div className="filter-tabs">
-                    <button
-                        className={`filter-tab ${activeFilter === 'all' ? 'active' : ''}`}
-                        onClick={() => filterPosts('all')}
-                    >
-                        All Posts
-                    </button>
-                    <button
-                        className={`filter-tab ${activeFilter === 'ctf' ? 'active' : ''}`}
-                        onClick={() => filterPosts('ctf')}
-                    >
-                        CTF Writeups
-                    </button>
-                    <button
-                        className={`filter-tab ${activeFilter === 'machines' ? 'active' : ''}`}
-                        onClick={() => filterPosts('machines')}
-                    >
-                        Machine Walkthroughs
-                    </button>
-                    <button
-                        className={`filter-tab ${activeFilter === 'certs' ? 'active' : ''}`}
-                        onClick={() => filterPosts('certs')}
-                    >
-                        Certification Experiences
-                    </button>
-                </div>
-
-                {/* Content Area */}
-                <div className="blog-grid-container"
-                    onMouseEnter={() => activeFilter === 'all' && setIsPaused(true)}
-                    onMouseLeave={() => activeFilter === 'all' && setIsPaused(false)}
-                    onTouchStart={() => activeFilter === 'all' && setIsPaused(true)}
-                    onTouchEnd={() => {
-                        if (activeFilter === 'all') {
-                            setTimeout(() => setIsPaused(false), 2000);
-                        }
-                    }}
-                >
-                    {loading && (
-                        <div className="loading-spinner">
-                            <i className="fas fa-circle-notch fa-spin"></i>
-                            <p>Loading posts from Medium...</p>
+                <div className="blog-grid-static" style={{ marginTop: '2rem' }}>
+                    {previewPosts.map((post) => (
+                        <div key={post.slug} className="blog-card">
+                            <div className="blog-card-date">{post.date}</div>
+                            <h3 className="blog-card-title">
+                                <Link to={`/writeups/${post.slug}`}>{post.title}</Link>
+                            </h3>
+                            <p className="blog-card-excerpt">
+                                {post.description.replace('Introduction: ', '')}
+                            </p>
+                            <div className="blog-card-categories">
+                                {post.tags.map((tag, i) => (
+                                    <span key={i} className="category-tag">
+                                        {tag.toUpperCase()}
+                                    </span>
+                                ))}
+                                <span className="category-tag" style={{ background: 'rgba(255,255,255,0.03)', color: '#a3a3a3', border: '1px solid rgba(255,255,255,0.05)' }}>
+                                    {post.readTime}
+                                </span>
+                            </div>
                         </div>
-                    )}
-
-                    {error && (
-                        <div className="loading-spinner">
-                            <i className="fas fa-exclamation-circle"></i>
-                            <p>{error}. Please visit Medium directly.</p>
-                        </div>
-                    )}
-
-                    {!loading && !error && (
-                        activeFilter === 'all' ? (
-                                    /* CAROUSEL VIEW FOR 'ALL POSTS' */
-                                    <>
-                                        <button className="carousel-button left" onClick={headerScrollLeft} aria-label="Scroll left">
-                                            <i className="fas fa-chevron-left"></i>
-                                        </button>
-
-                                        <div className="blog-grid" ref={scrollRef}>
-                                            {displayPosts.map((post, index) => (
-                                                <div key={index} className="blog-card" data-categories={post.autoCategories.join(',')}>
-                                                    <div className="blog-card-date">{formatDate(post.pubDate)}</div>
-                                                    <h3 className="blog-card-title">
-                                                        <a href={post.link} target="_blank" rel="noopener noreferrer">{post.title}</a>
-                                                    </h3>
-                                                    <p className="blog-card-excerpt">{stripHTML(post.description)}</p>
-                                                    <div className="blog-card-categories">
-                                                        {post.categories && post.categories.slice(0, 3).map((cat, i) => (
-                                                            <span key={i} className="category-tag">{cat}</span>
-                                                        ))}
-                                                        {post.autoCategories.map((cat, i) => (
-                                                            <span key={`auto-${i}`} className="category-tag">{cat.toUpperCase()}</span>
-                                                        ))}
-                                                    </div>
-                                                </div>
-                                            ))}
-                                        </div>
-
-                                        <button className="carousel-button right" onClick={headerScrollRight} aria-label="Scroll right">
-                                            <i className="fas fa-chevron-right"></i>
-                                        </button>
-                                    </>
-                                ) : (
-                                    /* STATIC GRID VIEW FOR CATEGORIES */
-                                    <div className="blog-grid-static">
-                                        {displayPosts.map((post, index) => (
-                                            <div key={index} className="blog-card" data-categories={post.autoCategories.join(',')}>
-                                                <div className="blog-card-date">{formatDate(post.pubDate)}</div>
-                                                <h3 className="blog-card-title">
-                                                    <a href={post.link} target="_blank" rel="noopener noreferrer">{post.title}</a>
-                                                </h3>
-                                                <p className="blog-card-excerpt">{stripHTML(post.description)}</p>
-                                                <div className="blog-card-categories">
-                                                    {post.categories && post.categories.slice(0, 3).map((cat, i) => (
-                                                        <span key={i} className="category-tag">{cat}</span>
-                                                    ))}
-                                                    {post.autoCategories.map((cat, i) => (
-                                                        <span key={`auto-${i}`} className="category-tag">{cat.toUpperCase()}</span>
-                                                    ))}
-                                                </div>
-                                            </div>
-                                        ))}
-                                    </div>
-                            )
-                    )}
+                    ))}
                 </div>
 
                 <div className="blog-cta">
-                    <a href="https://medium.com/@srihari.n.narayan" target="_blank" rel="noopener noreferrer" className="btn btn-outline">
-                        View All Posts on Medium
+                    <Link to="/writeups" className="btn btn-outline">
+                        View All Writeups & Walkthroughs
                         <i className="fas fa-arrow-right"></i>
-                    </a>
+                    </Link>
                 </div>
             </div>
         </section>
