@@ -67,128 +67,90 @@ function WriteupsPage() {
 
             <main className="writeups-main-content">
                 <div className="writeups-container">
-                    <div className="writeups-layout">
-                        {/* Main Feed Column */}
-                        <div className="feed-column">
-                            <h1 className="dashboard-title">Dashboard & Articles</h1>
-                            <p className="dashboard-subtitle">A collection of security writeups, walkthroughs, and research notes moved locally from Medium.</p>
+                    <div className="feed-column">
+                        <h1 className="dashboard-title">Writeups and Blogs</h1>
+                        <p className="dashboard-subtitle">A collection of security writeups, machine walkthroughs, and research notes hosted locally.</p>
 
-                            {/* Medium-style Tabs */}
-                            <div className="dashboard-tabs">
-                                {tabs.map(tab => (
-                                    <button
-                                        key={tab.id}
-                                        className={`dashboard-tab ${activeTab === tab.id ? 'active' : ''}`}
-                                        onClick={() => setActiveTab(tab.id)}
-                                    >
-                                        {tab.label}
-                                    </button>
-                                ))}
-                            </div>
-
-                            {/* Articles List */}
-                            <div className="articles-list">
-                                {filteredWriteups.length > 0 ? (
-                                    filteredWriteups.map((writeup, index) => (
-                                        <article key={writeup.slug} className="article-item">
-                                            {/* Pinned Tag */}
-                                            {writeup.pinned && (
-                                                <div className="pinned-header">
-                                                    <i className="fas fa-thumbtack"></i> Pinned
-                                                </div>
-                                            )}
-
-                                            <div className="article-inner-grid">
-                                                {/* Text Content */}
-                                                <div className="article-text-section">
-                                                    {/* Author Row */}
-                                                    <div className="author-row">
-                                                        <div className="author-avatar">
-                                                            <i className="fas fa-user-secret"></i>
-                                                        </div>
-                                                        <span className="author-name">Srihari N Narayan</span>
-                                                        <span className="bullet-separator">•</span>
-                                                        <span className="publish-date">{writeup.date}</span>
-                                                    </div>
-
-                                                    {/* Title */}
-                                                    <h2 className="article-item-title">
-                                                        <Link to={`/writeups/${writeup.slug}`}>{writeup.title}</Link>
-                                                    </h2>
-
-                                                    {/* Subtitle/Excerpt */}
-                                                    <p className="article-item-description">{writeup.description}</p>
-
-                                                    {/* Bottom Metadata bar */}
-                                                    <div className="article-item-footer">
-                                                        <div className="footer-left">
-                                                            <span className="footer-metric">
-                                                                <i className="fas fa-hands-clapping"></i> {writeup.claps}
-                                                            </span>
-                                                            <span className="footer-metric">
-                                                                <i className="far fa-comment"></i> {writeup.responses}
-                                                            </span>
-                                                            <span className="read-time-badge">{writeup.readTime}</span>
-                                                        </div>
-                                                        <div className="footer-right">
-                                                            <button className="footer-action-btn" aria-label="Bookmark">
-                                                                <i className="far fa-bookmark"></i>
-                                                            </button>
-                                                            <button className="footer-action-btn" aria-label="More Options">
-                                                                <i className="fas fa-ellipsis-h"></i>
-                                                            </button>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                                {/* Thumbnail / Image */}
-                                                {renderThumbnail(writeup)}
-                                            </div>
-                                        </article>
-                                    ))
-                                ) : (
-                                    <div className="empty-state">
-                                        <i className="fas fa-folder-open"></i>
-                                        <p>No articles found in this category.</p>
-                                    </div>
-                                )}
-                            </div>
+                        {/* Category Filter Tabs */}
+                        <div className="dashboard-tabs">
+                            {tabs.map(tab => (
+                                <button
+                                    key={tab.id}
+                                    className={`dashboard-tab ${activeTab === tab.id ? 'active' : ''}`}
+                                    onClick={() => setActiveTab(tab.id)}
+                                >
+                                    {tab.label}
+                                </button>
+                            ))}
                         </div>
 
-                        {/* Sidebar Column */}
-                        <aside className="sidebar-column">
-                            <div className="sidebar-widget profile-widget">
-                                <div className="widget-header">
-                                    <div className="profile-secret-icon">
-                                        <i className="fas fa-shield-halved"></i>
-                                    </div>
-                                    <h3>Srihari N Narayan</h3>
-                                </div>
-                                <p className="profile-bio">Cybersecurity Enthusiast | CTF Player | Security Researcher | Master of Engineering in Cybersecurity at UMD.</p>
-                                <div className="profile-stats">
-                                    <div className="stat-box">
-                                        <span className="stat-num">{writeups.length}</span>
-                                        <span className="stat-label">Articles</span>
-                                    </div>
-                                    <div className="stat-box">
-                                        <span className="stat-num">{writeups.filter(w => w.pinned).length}</span>
-                                        <span className="stat-label">Pinned</span>
-                                    </div>
-                                </div>
-                            </div>
+                        {/* Articles List */}
+                        <div className="articles-list">
+                            {filteredWriteups.length > 0 ? (
+                                filteredWriteups.map((writeup) => (
+                                    <article key={writeup.slug} className="article-item">
+                                        {/* Pinned Tag */}
+                                        {writeup.pinned && (
+                                            <div className="pinned-header">
+                                                <i className="fas fa-thumbtack"></i> Pinned
+                                            </div>
+                                        )}
 
-                            <div className="sidebar-widget tags-widget">
-                                <h3>Recommended Topics</h3>
-                                <div className="topics-cloud">
-                                    <span className="topic-tag" onClick={() => setActiveTab('htb')}>HTB</span>
-                                    <span className="topic-tag" onClick={() => setActiveTab('thm')}>TryHackMe</span>
-                                    <span className="topic-tag" onClick={() => setActiveTab('certs')}>Certifications</span>
-                                    <span className="topic-tag">AI Security</span>
-                                    <span className="topic-tag">Penetration Testing</span>
-                                    <span className="topic-tag">Adversarial ML</span>
+                                        <div className="article-inner-grid">
+                                            {/* Text Content */}
+                                            <div className="article-text-section">
+                                                {/* Author Row */}
+                                                <div className="author-row">
+                                                    <div className="author-avatar">
+                                                        <i className="fas fa-user-secret"></i>
+                                                    </div>
+                                                    <span className="author-name">Srihari N Narayan</span>
+                                                    <span className="bullet-separator">•</span>
+                                                    <span className="publish-date">{writeup.date}</span>
+                                                </div>
+
+                                                {/* Title */}
+                                                <h2 className="article-item-title">
+                                                    <Link to={`/writeups/${writeup.slug}`}>{writeup.title}</Link>
+                                                </h2>
+
+                                                {/* Subtitle/Excerpt */}
+                                                <p className="article-item-description">{writeup.description}</p>
+
+                                                {/* Bottom Metadata bar */}
+                                                <div className="article-item-footer">
+                                                    <div className="footer-left">
+                                                        <span className="footer-metric">
+                                                            <i className="fas fa-hands-clapping"></i> {writeup.claps}
+                                                        </span>
+                                                        <span className="footer-metric">
+                                                            <i className="far fa-comment"></i> {writeup.responses}
+                                                        </span>
+                                                        <span className="read-time-badge">{writeup.readTime}</span>
+                                                    </div>
+                                                    <div className="footer-right">
+                                                        <button className="footer-action-btn" aria-label="Bookmark">
+                                                            <i className="far fa-bookmark"></i>
+                                                        </button>
+                                                        <button className="footer-action-btn" aria-label="More Options">
+                                                            <i className="fas fa-ellipsis-h"></i>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            {/* Thumbnail / Image */}
+                                            {renderThumbnail(writeup)}
+                                        </div>
+                                    </article>
+                                ))
+                            ) : (
+                                <div className="empty-state">
+                                    <i className="fas fa-folder-open"></i>
+                                    <p>No articles found in this category.</p>
                                 </div>
-                            </div>
-                        </aside>
+                            )}
+                        </div>
                     </div>
                 </div>
             </main>
@@ -215,19 +177,13 @@ function WriteupsPage() {
                     padding: 0 1.5rem;
                 }
 
-                .writeups-layout {
-                    display: grid;
-                    grid-template-columns: 1fr;
-                    gap: 3rem;
+                /* Single column focused feed layout */
+                .feed-column {
+                    max-width: 800px;
+                    margin: 0 auto;
                 }
 
-                @media (min-width: 992px) {
-                    .writeups-layout {
-                        grid-template-columns: 2.2fr 1fr;
-                    }
-                }
-
-                /* Dashboard & Titles */
+                /* Titles & Subtitles */
                 .dashboard-title {
                     font-family: var(--font-heading);
                     color: var(--color-text-primary);
@@ -242,10 +198,10 @@ function WriteupsPage() {
                     color: var(--color-text-secondary);
                     font-size: 1.1rem;
                     line-height: 1.6;
-                    margin-bottom: 2rem;
+                    margin-bottom: 2.5rem;
                 }
 
-                /* Medium-style Tabs */
+                /* Navigation tabs */
                 .dashboard-tabs {
                     display: flex;
                     gap: 1.5rem;
@@ -365,7 +321,7 @@ function WriteupsPage() {
                     color: var(--color-text-secondary);
                 }
 
-                /* Article Texts */
+                /* Article Titles & Excerpts */
                 .article-item-title {
                     font-family: var(--font-heading);
                     font-size: 1.4rem;
@@ -394,7 +350,7 @@ function WriteupsPage() {
                     overflow: hidden;
                 }
 
-                /* Bottom Metadatas */
+                /* Article Footer metrics */
                 .article-item-footer {
                     display: flex;
                     justify-content: space-between;
@@ -491,112 +447,6 @@ function WriteupsPage() {
                     padding: 0.1rem 0.4rem;
                     border-radius: var(--radius-sm);
                     border: 1px solid rgba(220, 20, 60, 0.2);
-                }
-
-                /* Sidebar Layout */
-                .sidebar-column {
-                    display: flex;
-                    flex-direction: column;
-                    gap: 2.5rem;
-                }
-
-                .sidebar-widget {
-                    background: rgba(255, 255, 255, 0.02);
-                    border: 1px solid var(--glass-border);
-                    border-radius: var(--radius-lg);
-                    padding: 1.75rem;
-                    backdrop-filter: blur(10px);
-                }
-
-                .sidebar-widget h3 {
-                    font-family: var(--font-heading);
-                    font-size: 1.15rem;
-                    color: var(--color-text-primary);
-                    margin: 0 0 1rem 0;
-                }
-
-                /* Profile Widget */
-                .profile-widget {
-                    text-align: center;
-                    border-top: 2px solid var(--color-red);
-                }
-
-                .widget-header {
-                    display: flex;
-                    flex-direction: column;
-                    align-items: center;
-                    gap: 0.75rem;
-                    margin-bottom: 1rem;
-                }
-
-                .profile-secret-icon {
-                    width: 60px;
-                    height: 60px;
-                    border-radius: 50%;
-                    background: rgba(220, 20, 60, 0.1);
-                    border: 1px solid rgba(220, 20, 60, 0.4);
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                    color: var(--color-red);
-                    font-size: 1.8rem;
-                    box-shadow: 0 0 20px rgba(220, 20, 60, 0.2);
-                }
-
-                .profile-bio {
-                    font-size: 0.9rem;
-                    color: var(--color-text-secondary);
-                    line-height: 1.5;
-                    margin-bottom: 1.5rem;
-                }
-
-                .profile-stats {
-                    display: grid;
-                    grid-template-columns: 1fr 1fr;
-                    gap: 1rem;
-                    border-top: 1px solid var(--glass-border);
-                    padding-top: 1.25rem;
-                }
-
-                .stat-box {
-                    display: flex;
-                    flex-direction: column;
-                    align-items: center;
-                }
-
-                .stat-num {
-                    font-size: 1.3rem;
-                    font-weight: 700;
-                    color: var(--color-text-primary);
-                }
-
-                .stat-label {
-                    font-size: 0.75rem;
-                    color: var(--color-text-secondary);
-                }
-
-                /* Tags Widget */
-                .topics-cloud {
-                    display: flex;
-                    flex-wrap: wrap;
-                    gap: 0.6rem;
-                }
-
-                .topic-tag {
-                    font-size: 0.85rem;
-                    color: var(--color-text-secondary);
-                    background: rgba(255, 255, 255, 0.03);
-                    border: 1px solid var(--glass-border);
-                    padding: 0.4rem 0.8rem;
-                    border-radius: 20px;
-                    cursor: pointer;
-                    transition: all 0.3s ease;
-                }
-
-                .topic-tag:hover {
-                    color: var(--color-white);
-                    border-color: var(--color-red);
-                    background: rgba(220, 20, 60, 0.15);
                 }
 
                 /* Empty state */
