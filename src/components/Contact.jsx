@@ -15,6 +15,12 @@ function Contact() {
             icon: 'fab fa-linkedin-in',
             url: 'https://www.linkedin.com/in/srihari-narayan/',
             type: 'social'
+        },
+        {
+            name: 'Hack The Box',
+            icon: 'fas fa-cube',
+            url: 'https://app.hackthebox.com/public/users/1404374',
+            type: 'social'
         }
     ];
 

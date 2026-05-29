@@ -50,8 +50,8 @@ function Hero() {
                             <a href="https://www.linkedin.com/in/srihari-narayan/" target="_blank" rel="noopener noreferrer" className="social-link" aria-label="LinkedIn">
                                 <i className="fab fa-linkedin-in"></i>
                             </a>
-                            <a href="https://tryhackme.com/p/srihari.narayan" target="_blank" rel="noopener noreferrer" className="social-link" aria-label="TryHackMe">
-                                <i className="fas fa-flag"></i>
+                            <a href="https://app.hackthebox.com/public/users/1404374" target="_blank" rel="noopener noreferrer" className="social-link" aria-label="Hack The Box">
+                                <i className="fas fa-cube"></i>
                             </a>
                             <a href="https://github.com/Srihari-Narayan" target="_blank" rel="noopener noreferrer" className="social-link" aria-label="GitHub">
                                 <i className="fab fa-github"></i>
