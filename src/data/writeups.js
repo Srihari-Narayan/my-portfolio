@@ -65,7 +65,7 @@ The content for this walkthrough will be uploaded here soon.`
         description: "Reflecting on the challenges, teamwork, and learning experiences from HTB's Cyber Apocalypse CTF 2025.",
         date: "Feb 16, 2026",
         readTime: "6 min read",
-        thumbnail: "",
+        thumbnail: "/images/cyber_apocalypse_2025.jpg",
         tags: ["htb", "ctf", "experience"],
         content: `For the third CTF, me and my team took part in HTB’s Cyber Apocalypse CTF 2025: Tales from Eldoria. While there were a lot of categories of challenges, I focused on a wide array of challenges such as Web, Reverse Engineering, OSINT and my favourite, Prompt injection. Our rank was 1515 out of 8130 teams, and the competition lasted for 5 days, starting on March 21st 2025 and ending on March 26th 2025. Let’s not waste any time and dive into the challenges!
 
