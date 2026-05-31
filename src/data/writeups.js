@@ -77,11 +77,43 @@ The content for this walkthrough will be uploaded here soon.`
         description: "Sharing the lessons, scores, and writeups from competing in picoCTF 2025.",
         date: "Jan 14, 2026",
         readTime: "5 min read",
-        thumbnail: "",
+        thumbnail: "/images/picoctf_2025.png",
         tags: ["ctf", "picoctf", "experience"],
-        content: `## Content Coming Soon
+        content: `I know that I am a bit late to this writeup, but I have been busy with a lot of things, some of which you’ll hear about in detail soon, including but not limited to me earning my OSCP certification. Anyways, moving onto the actual writeup.
 
-The content for this walkthrough will be uploaded here soon.`
+In March of 2025, I took part in a CTF competition — PicoCTF 2025, hosted by Carnegie Mellon University. My team and I ranked 435th out of 10460 teams with an overall score of 4410, with my personal contribution of 1275 points. I have to say, this is a massive improvement since my previous CTF competition attempt. Unlike the previous competition, this particular CTF lasted for 10 days! — starting on 7th March 2025, at 12:00 PM EST, and ending on 17th March 2025, at 3:00 PM EST. I completed 8 challenges ranging from easy to medium in difficulty across three domains — web exploitation, reverse engineering and even forensics.
+
+For the sake of saving time, for each of the challenges which I finished, I will directly go into my approaches which succeeded, as opposed to walking you through the trial-and-error process.
+
+Web Exploitation: One of my favourite domains in cybersecurity is web exploitation and protection, so naturally I gravitated towards this section in the competition before anything else.
+
+1. SSTI1: After trial-and-error of trying to identify the server side template used in this vulnerable webapp, I quickly found out that it was using Jinja2 through the payload {{7*’7’}}. I managed to get the flag using an appropriate SSTI payload:
+
+{% if request['application']['__globals__']['__builtins__']['__import__']('os')['popen']('cat flag.txt')['read']() == 'chiv' %} a {% endif %}
+
+2. n0s4n1ty 1: I was able to upload a webshell, and then simply executed ‘cat flag.txt’
+
+3. 3v@l: The webapp was running the vulnerable Python eval() function, which I exploited to get the flag.
+
+4. Pachinko: This was kinda tough (for me at least), but after analysing the source code, I figured the output should be 1010, and surprisingly it worked.
+
+Reverse Engineering: Two of our team members were already focusing on Web Exploitation, so I thought about attempting Reverse Engineering, as no one else seemed to be working on it.
+
+1. Flag Hunters: The source code revealed that if I entered ‘RETURN 0’ as an input, it would print the flag… so I did.
+
+2. Tap into Hash: I simply made a descrambler function based on the source code.
+
+3. Quantum Scrambler: This was a fun one! I decoded the hex string, and removed the duplicates manually, to reveal the value of the flag.
+
+Forensics: Feeling burnt out after failing to solve more web based and reverse engineering challenges, I decided to dabble in Forensics. I was familiar with tools like exiftool, steghide, and aperi’solve, so I decided to take on one of the easier challenges.
+
+1. RED: I used Aperi’solve to extract a base64 encoded text, which upon being decoded revealed the flag.
+
+I even attempted some binary exploitation challenges, and even managed to make progress, but unfortunately could not get the flag.
+
+This was a much bigger CTF competition than my previous endeavour with a lot more variety in terms of domains with varying difficulties as well.
+
+Overall, this particular CTF made me realise that I have a knack for reverse engineering, more than I expected at least, and I really liked attempting the challenges in this section.`
     },
     {
         slug: "my-first-ctf-winja-ctf-nullcon-goa-2025",
