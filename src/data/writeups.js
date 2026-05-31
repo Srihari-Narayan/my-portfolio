@@ -67,9 +67,49 @@ The content for this walkthrough will be uploaded here soon.`
         readTime: "6 min read",
         thumbnail: "",
         tags: ["htb", "ctf", "experience"],
-        content: `## Content Coming Soon
+        content: `For the third CTF, me and my team took part in HTB’s Cyber Apocalypse CTF 2025: Tales from Eldoria. While there were a lot of categories of challenges, I focused on a wide array of challenges such as Web, Reverse Engineering, OSINT and my favourite, Prompt injection. Our rank was 1515 out of 8130 teams, and the competition lasted for 5 days, starting on March 21st 2025 and ending on March 26th 2025. Let’s not waste any time and dive into the challenges!
 
-The content for this walkthrough will be uploaded here soon.`
+## Web
+
+Being the most comfortable with web security and web based challenges, it was a no brainer that I start with this category first.
+
+1. Trial by fire: This was a simple Server Side Template Injection challenge. I got the flag using this simple payload:
+
+\`\`\`jinja2
+{{ url_for.__globals__.os.popen('cat flag.txt').read() }}
+\`\`\`
+
+2. Whispers of the moonbeam: This was an input field which was vulnerable to command injection, so naturally I appended a command to read the contents of the flag.txt file to a legitimate use case command:
+
+\`\`\`bash
+examine | cat flag.txt
+\`\`\`
+
+## OSINT
+
+This was my introduction to OSINT (Open Source Intelligence) based challenges. I didn’t even think that CTF challenges could be like this!
+
+1. Echoes in Stone: It was a simple reverse image search
+
+2. The Stone that wispers: It was a simple reverse image search in combination with looking up the wikipedia page.
+
+3. The Ancient Citadel: It was again a simple reverse image search, along with looking up facebook as well as Wikipedia.
+
+## Reverse Engineering
+
+After being familiar with reverse engineering because of the past few CTFs, I decided to attempt one challenge in this domain again.
+
+1. SealedRune: I decompiled the binary using DogBolt Decompiler, and then found a b64 string. I then decoded it which revealed the value of the flag in reverse. I then reversed it to get the flag.
+
+## AI Prompt Injection
+
+My absolute favourite type of CTF challenge as this involves manipulating the AI into giving you the flag. This essentially boils down to how well you can craft a lie along with crafting case specific payloads.
+
+1. Cursed GateKeeper: I told the AI Chatbot that I was the evil leader Malakar (the big bad boss), and the it immediately gave me the real flag.
+
+All in all, I solved a total of 7 challenges in total in the given timeframe. My teammates focused on other categories such as Forensics, binary exploitation and cryptography. I would say that this was a good introduction to OSINT.
+
+However this CTF made me realise something — While it’s true that dabbling in CTFs can give you *some* level of hands-on practical experience (at least with security tools), I needed to study up and earn industry recognized certifications if I wanted to build my profile even more. After researching, I decided to prepare for eJPT from INE Security, and then OSCP from OffSec soon after.`
     },
     {
         slug: "my-second-ctf-picoctf-2025",
