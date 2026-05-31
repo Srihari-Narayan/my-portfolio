@@ -8,15 +8,12 @@ function WriteupViewer() {
     const { slug } = useParams();
     const navigate = useNavigate();
     const [writeup, setWriteup] = useState(null);
-    const [claps, setClaps] = useState(0);
-    const [hasClapped, setHasClapped] = useState(false);
     const [scrollPercent, setScrollPercent] = useState(0);
 
     useEffect(() => {
         const found = writeups.find(w => w.slug === slug);
         if (found) {
             setWriteup(found);
-            setClaps(found.claps);
         } else {
             // Redirect back to list if writeup is not found
             navigate('/writeups');
@@ -37,16 +34,6 @@ function WriteupViewer() {
     }, []);
 
     if (!writeup) return null;
-
-    const handleClap = () => {
-        if (!hasClapped) {
-            setClaps(prev => prev + 1);
-            setHasClapped(true);
-        } else {
-            setClaps(prev => prev - 1);
-            setHasClapped(false);
-        }
-    };
 
     // Custom lightweight markdown micro-parser to render article contents beautifully
     const parseMarkdown = (text) => {
@@ -244,27 +231,12 @@ function WriteupViewer() {
                         dangerouslySetInnerHTML={{ __html: parseMarkdown(writeup.content) }}
                     />
 
-                    {/* Article Footer & Interactive Metrics */}
+                    {/* Article Footer */}
                     <footer className="article-viewer-footer">
-                        <div className="metrics-group">
-                            <button 
-                                className={`clap-btn ${hasClapped ? 'clapped' : ''}`} 
-                                onClick={handleClap}
-                                aria-label="Clap for this article"
-                            >
-                                <i className="fas fa-hands-clapping"></i>
-                                <span>{claps} claps</span>
-                            </button>
-
-                            <div className="share-buttons-container">
-                                <span>Share:</span>
-                                <button className="share-btn" aria-label="Share on LinkedIn" onClick={() => window.open(`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(window.location.href)}`, '_blank')}>
-                                    <i className="fab fa-linkedin-in"></i>
-                                </button>
-                                <button className="share-btn" aria-label="Bookmark">
-                                    <i className="far fa-bookmark"></i>
-                                </button>
-                            </div>
+                        <div className="back-navigation" style={{ marginTop: '2rem' }}>
+                            <Link to="/writeups" className="back-link-btn">
+                                <i className="fas fa-arrow-left"></i> Back to Articles
+                            </Link>
                         </div>
                     </footer>
                 </article>

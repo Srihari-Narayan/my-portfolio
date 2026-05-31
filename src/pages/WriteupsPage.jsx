@@ -18,12 +18,8 @@ function WriteupsPage() {
 
     useEffect(() => {
         if (activeTab === 'all') {
-            // Pinned articles first, then by date (newer first)
-            const sorted = [...writeups].sort((a, b) => {
-                if (a.pinned && !b.pinned) return -1;
-                if (!a.pinned && b.pinned) return 1;
-                return new Date(b.date) - new Date(a.date);
-            });
+            // Chronological sort (newer first)
+            const sorted = [...writeups].sort((a, b) => new Date(b.date) - new Date(a.date));
             setFilteredWriteups(sorted);
         } else {
             const filtered = writeups.filter(w => w.tags.includes(activeTab));
@@ -89,13 +85,6 @@ function WriteupsPage() {
                             {filteredWriteups.length > 0 ? (
                                 filteredWriteups.map((writeup) => (
                                     <article key={writeup.slug} className="article-item">
-                                        {/* Pinned Tag */}
-                                        {writeup.pinned && (
-                                            <div className="pinned-header">
-                                                <i className="fas fa-thumbtack"></i> Pinned
-                                            </div>
-                                        )}
-
                                         <div className="article-inner-grid">
                                             {/* Text Content */}
                                             <div className="article-text-section">
@@ -120,21 +109,7 @@ function WriteupsPage() {
                                                 {/* Bottom Metadata bar */}
                                                 <div className="article-item-footer">
                                                     <div className="footer-left">
-                                                        <span className="footer-metric">
-                                                            <i className="fas fa-hands-clapping"></i> {writeup.claps}
-                                                        </span>
-                                                        <span className="footer-metric">
-                                                            <i className="far fa-comment"></i> {writeup.responses}
-                                                        </span>
                                                         <span className="read-time-badge">{writeup.readTime}</span>
-                                                    </div>
-                                                    <div className="footer-right">
-                                                        <button className="footer-action-btn" aria-label="Bookmark">
-                                                            <i className="far fa-bookmark"></i>
-                                                        </button>
-                                                        <button className="footer-action-btn" aria-label="More Options">
-                                                            <i className="fas fa-ellipsis-h"></i>
-                                                        </button>
                                                     </div>
                                                 </div>
                                             </div>

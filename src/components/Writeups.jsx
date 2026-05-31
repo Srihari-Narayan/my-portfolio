@@ -5,13 +5,9 @@ import { writeups } from '../data/writeups';
 function Writeups() {
     const [revealRef, isVisible] = useScrollReveal();
 
-    // Select top 3 latest/pinned writeups for the homepage preview
+    // Select top 3 latest writeups for the homepage preview (purely chronological)
     const previewPosts = [...writeups]
-        .sort((a, b) => {
-            if (a.pinned && !b.pinned) return -1;
-            if (!a.pinned && b.pinned) return 1;
-            return new Date(b.date) - new Date(a.date);
-        })
+        .sort((a, b) => new Date(b.date) - new Date(a.date))
         .slice(0, 3);
 
     return (
