@@ -374,18 +374,24 @@ function WriteupViewer() {
                 /* Cover image */
                 .article-full-cover {
                     width: 100%;
-                    height: 380px;
+                    max-height: 500px;
                     border-radius: var(--radius-lg);
                     overflow: hidden;
                     border: 1px solid var(--glass-border);
                     margin-bottom: 3rem;
                     box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    background: rgba(10, 10, 10, 0.5);
                 }
 
                 .article-full-cover img {
-                    width: 100%;
-                    height: 100%;
-                    object-fit: cover;
+                    max-width: 100%;
+                    max-height: 500px;
+                    width: auto;
+                    height: auto;
+                    object-fit: contain;
                 }
 
                 .cover-placeholder {

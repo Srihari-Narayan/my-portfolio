@@ -89,7 +89,9 @@ Web Exploitation: One of my favourite domains in cybersecurity is web exploitati
 
 1. SSTI1: After trial-and-error of trying to identify the server side template used in this vulnerable webapp, I quickly found out that it was using Jinja2 through the payload {{7*’7’}}. I managed to get the flag using an appropriate SSTI payload:
 
+\`\`\`jinja2
 {% if request['application']['__globals__']['__builtins__']['__import__']('os')['popen']('cat flag.txt')['read']() == 'chiv' %} a {% endif %}
+\`\`\`
 
 2. n0s4n1ty 1: I was able to upload a webshell, and then simply executed ‘cat flag.txt’
 
