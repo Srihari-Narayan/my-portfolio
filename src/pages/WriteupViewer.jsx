@@ -214,13 +214,13 @@ function WriteupViewer() {
                     </header>
 
                     {/* Pinned image/thumbnail fallback if any */}
-                    {writeup.thumbnail ? (
+                    {writeup.pdf ? (
+                        <div className="article-full-cover pdf-cover-container">
+                            <iframe src={`${writeup.pdf}#toolbar=0&navpanes=0&view=Fit`} title={writeup.title} className="pdf-iframe-full" />
+                        </div>
+                    ) : writeup.thumbnail ? (
                         <div className="article-full-cover">
-                            {writeup.thumbnail.endsWith('.pdf') ? (
-                                <iframe src={`${writeup.thumbnail}#toolbar=0&navpanes=0`} title={writeup.title} className="pdf-iframe-full" />
-                            ) : (
-                                <img src={writeup.thumbnail} alt={writeup.title} />
-                            )}
+                            <img src={writeup.thumbnail} alt={writeup.title} />
                         </div>
                     ) : (
                         <div className="article-full-cover cover-placeholder">
@@ -677,12 +677,23 @@ function WriteupViewer() {
                     border-bottom-color: var(--color-text-primary);
                 }
 
-                .pdf-iframe-full {
-                    width: 100%;
-                    height: 500px;
-                    border: none;
-                    border-radius: var(--radius-lg);
-                }
+                 .pdf-iframe-full {
+                     width: 100%;
+                     aspect-ratio: 1.414;
+                     border: none;
+                     border-radius: var(--radius-lg);
+                     display: block;
+                 }
+
+                 .pdf-cover-container {
+                     width: 100%;
+                     height: auto;
+                     max-height: none !important;
+                     overflow: hidden;
+                     border-radius: var(--radius-lg);
+                     box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+                     border: 1px solid var(--glass-border);
+                 }
             `}</style>
         </div>
     );
