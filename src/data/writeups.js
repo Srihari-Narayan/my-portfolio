@@ -53,11 +53,39 @@ The content for this walkthrough will be uploaded here soon.`
         description: "Tips and resources for passing the eJPT (Junior Penetration Tester) exam as a cybersecurity beginner.",
         date: "Feb 17, 2026",
         readTime: "8 min read",
-        thumbnail: "",
+        thumbnail: "/images/ejpt_cert.jpg",
         tags: ["certs", "ejpt", "beginner"],
-        content: `## Content Coming Soon
+        content: `## Introduction
 
-The content for this walkthrough will be uploaded here soon.`
+While I was preparing for the OSCP exam, my friend had told me about the eJPT Junior Penetration Tester Exam by INE Security. Seeing that this would be a great way to get my feet wet before diving into the proverbial swimming pool that is OSCP, I decided to purchase the 3 month study bundle and exam voucher titled ‘eJPT Fundamentals’. Another thing to note, the bundle was on sale when I bought it — summer sale I think, so be on the lookout for that if you’re interested in it.
+
+![eJPT Badge](/images/ejpt_badge.png)
+
+## Pre-Exam
+
+Before I even started preparing for this exam, I researched online on the format of the exam: Fully hands-on, 48 hour practical exam, open book, open notes, open internet, immediate results and feedback; but no report writing.
+
+While the videos and notes by the instructor Alexis Ahmed were really good and informative, the resource which genuinely helped me the most for preparing for this exam were the SkillCheck CTF challenges at the end of each module or sub-module. I highly recommend watching the lecture videos and then attempting the practice CTF challenge without looking up for any walkthroughs (there are plenty of them available in case you genuinely end up getting stuck).
+
+## The exam experience
+
+Forgive my memory, as I am recounting experiences from 6 or 7 months ago, but I am pretty sure I started my exam on 21st July 2025 around 6 PM and ended it the next day at 2 AM, taking around 8 or so hours. I should have started it in the morning, considering I had the freedom to start the exam at any time which I desired. Taking part in a bunch of real CTF competitions certainly helped my exam experience a lot. My goal wasn’t just to answer all of the questions correctly, but rather it was to capture all of the flags on all of the target machines; after all if you manage to get the flags, you can answer the MCQ questions correctly, as they act as a benchmark of sorts (and the implication is that you couldn’t answer the questions correctly unless you already got the flag the intended way).
+
+Unlike the OSCP exam, you can use Metasploit on the eJPT as many times as you like! This means that you don’t have to spend time manually testing exploits.
+
+My strategy for the exam was to pick a machine, and keep working on it until I hit a roadblock or captured the flag (or in some cases simply exploited the machine). Whenever I did hit a roadblock, I would take a break of 15 minutes and start working on a different machine, and then eventually circle back the machine I was stuck on. You would be surprised by the difference in efficiency between a well-rested mind and a burnt out one.
+
+## Post-Exam
+
+I gracefully passed the exam within 8 hours. I could’ve gotten a higher percentage than what I got, but honestly, I was just happy that I got all of the flags and grew a bit impatient. Parts where I messed up, or took for granted was port forwarding as I had never practised port forwarding ever before and figured I would do it on the fly during the exam which was a big mistake as I did not know how to troubleshoot efficiently when something went wrong. The main takeaway here is that you should always practise, and never take a topic for granted.
+
+Also another takeaway was that I should schedule my exams earlier in the day when I have the energy, and this is a key takeaway which I have followed since then.
+
+Finally, in a rush to finish the exam I didn’t cross verify some of the MCQ questions, as I was only focused on the practical implementation. I used notepad instead of Notion or Obsidian rather than keeping a solid documentation and taking proper notes (hey I was still a noob back then).
+
+## Conclusion
+
+Call me a nerd, but I had a lot of fun during this exam. Looking back, I can say that this is how my journey as an aspiring Penetration Tester began. From this exam, I learned that patience is key. If I had the chance to give the exam now, I would have implemented all of my methodologies which I had developed as part of my OSCP preparation, and utilized all that extra time after capturing the flags to verify the answers methodically (this time with patience). Ultimately, this certification was a great stepping stone to OSCP, and I would highly recommend this certification to anyone who is preparing for the OSCP exam.`
     },
     {
         slug: "my-experience-of-htbs-cyber-apocalypse-ctf-2025",

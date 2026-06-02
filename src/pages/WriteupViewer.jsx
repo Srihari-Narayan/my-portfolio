@@ -164,9 +164,11 @@ function WriteupViewer() {
         return htmlResult.join('\n');
     };
 
-    // Parse bold, code span, etc.
+    // Parse bold, code span, images, links, etc.
     const parseInlineMarkdown = (text) => {
         return text
+            .replace(/!\[(.*?)\]\((.*?)\)/g, '<img src="$2" alt="$1" class="article-inline-img" />') // Images
+            .replace(/\[(.*?)\]\((.*?)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer" class="article-link">$1</a>') // Links
             .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>') // Bold **text**
             .replace(/\*(.*?)\*/g, '<em>$1</em>') // Italic *text*
             .replace(/`(.*?)`/g, '<code class="inline-code">$1</code>'); // Inline code `code`
@@ -644,6 +646,29 @@ function WriteupViewer() {
                     color: var(--color-white);
                     border-color: var(--color-red);
                     background: rgba(220, 20, 60, 0.1);
+                }
+
+                .article-inline-img {
+                    display: block;
+                    max-width: 250px;
+                    height: auto;
+                    margin: 2.5rem auto;
+                    border-radius: var(--radius-md);
+                    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+                    border: 1px solid var(--glass-border);
+                }
+
+                .article-link {
+                    color: var(--color-red);
+                    text-decoration: none;
+                    font-weight: 500;
+                    border-bottom: 1px dashed rgba(220, 20, 60, 0.4);
+                    transition: all 0.3s ease;
+                }
+
+                .article-link:hover {
+                    color: var(--color-text-primary);
+                    border-bottom-color: var(--color-text-primary);
                 }
             `}</style>
         </div>
