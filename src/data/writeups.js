@@ -276,7 +276,7 @@ Overall, this particular CTF made me realise that I have a knack for reverse eng
     {
         slug: "my-first-ctf-winja-ctf-nullcon-goa-2025",
         title: "My First CTF (Winja CTF | Nullcon Goa 2025)",
-        description: "The story of how I competed in my very first capture-the-flag competition during Nullcon Goa 2025.",
+        description: "The story of how I competed in my very first CTF competition during Nullcon Goa 2025.",
         date: "Mar 11, 2025",
         readTime: "5 min read",
         thumbnail: "",
