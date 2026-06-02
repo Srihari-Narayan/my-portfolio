@@ -33,6 +33,13 @@ function WriteupsPage() {
     // Helper to render SVG/CSS visual placeholder for thumbnails
     const renderThumbnail = (writeup) => {
         if (writeup.thumbnail) {
+            if (writeup.thumbnail.endsWith('.pdf')) {
+                return (
+                    <div className="article-thumbnail">
+                        <iframe src={`${writeup.thumbnail}#toolbar=0&navpanes=0&scrollbar=0`} title={writeup.title} className="pdf-iframe-preview" />
+                    </div>
+                );
+            }
             return (
                 <div className="article-thumbnail">
                     <img src={writeup.thumbnail} alt={writeup.title} />
@@ -115,7 +122,9 @@ function WriteupsPage() {
                                             </div>
 
                                             {/* Thumbnail / Image */}
-                                            {renderThumbnail(writeup)}
+                                            <Link to={`/writeups/${writeup.slug}`} className="article-thumbnail-link">
+                                                {renderThumbnail(writeup)}
+                                            </Link>
                                         </div>
                                     </article>
                                 ))
@@ -389,6 +398,20 @@ function WriteupsPage() {
                     width: 100%;
                     height: 100%;
                     object-fit: cover;
+                }
+
+                .pdf-iframe-preview {
+                    width: 100%;
+                    height: 100%;
+                    border: none;
+                    pointer-events: none;
+                }
+
+                .article-thumbnail-link {
+                    display: block;
+                    width: 100%;
+                    height: 140px;
+                    text-decoration: none;
                 }
 
                 .placeholder-gradient {

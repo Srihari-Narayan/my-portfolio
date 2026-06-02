@@ -17,7 +17,7 @@ The content for this walkthrough will be uploaded here soon.`
         description: "An honest review and walkthrough of passing the TryHackMe PenTester Level 1 (PT1) certification exam.",
         date: "Mar 23, 2026",
         readTime: "6 min read",
-        thumbnail: "/images/pt1.png",
+        thumbnail: "/images/pt1_cert.pdf",
         tags: ["thm", "certs", "pentesting"],
         content: `## Introduction
 
@@ -175,7 +175,7 @@ In the end, the challenge itself was really fun, and I didn’t find it annoying
         description: "Tips and resources for passing the eJPT (Junior Penetration Tester) exam as a cybersecurity beginner.",
         date: "Feb 17, 2026",
         readTime: "8 min read",
-        thumbnail: "/images/ejpt_cert.jpg",
+        thumbnail: "/images/ejpt_cert.pdf",
         tags: ["certs", "ejpt", "beginner"],
         content: `## Introduction
 

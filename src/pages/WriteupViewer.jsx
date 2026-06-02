@@ -216,7 +216,11 @@ function WriteupViewer() {
                     {/* Pinned image/thumbnail fallback if any */}
                     {writeup.thumbnail ? (
                         <div className="article-full-cover">
-                            <img src={writeup.thumbnail} alt={writeup.title} />
+                            {writeup.thumbnail.endsWith('.pdf') ? (
+                                <iframe src={`${writeup.thumbnail}#toolbar=0&navpanes=0`} title={writeup.title} className="pdf-iframe-full" />
+                            ) : (
+                                <img src={writeup.thumbnail} alt={writeup.title} />
+                            )}
                         </div>
                     ) : (
                         <div className="article-full-cover cover-placeholder">
@@ -671,6 +675,13 @@ function WriteupViewer() {
                 .article-link:hover {
                     color: var(--color-text-primary);
                     border-bottom-color: var(--color-text-primary);
+                }
+
+                .pdf-iframe-full {
+                    width: 100%;
+                    height: 500px;
+                    border: none;
+                    border-radius: var(--radius-lg);
                 }
             `}</style>
         </div>
