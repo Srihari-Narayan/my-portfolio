@@ -41,11 +41,99 @@ The content for this walkthrough will be uploaded here soon.`
         description: "A step-by-step writeup of solving the BITSCTF 2026 OSINT challenge 'Internet RabbitHole'.",
         date: "Feb 24, 2026",
         readTime: "8 min read",
-        thumbnail: "",
+        thumbnail: "/images/bitsctf_2026/Picture1.png",
         tags: ["ctf", "osint", "walkthrough"],
-        content: `## Content Coming Soon
+        content: `![Picture 2](/images/bitsctf_2026/Picture2.png)
 
-The content for this walkthrough will be uploaded here soon.`
+I participated in BITSCTF 2026 recently which was held 20th-22nd February 2026, under the team RandomHackers. Our team placed 110th place out of 863 teams. I am only going to talk about this one particular OSINT challenge, which was one of my favourite OSINT based CTF challenges which I have ever solved. But this challenge wasn’t without its hiccups, although now I am getting ahead of myself.
+
+![Picture 3](/images/bitsctf_2026/Picture3.png)
+
+Now based on the challenge description, I quickly deduced that I am looking for a Linkedin account for the user ‘Shirley Klaus’ from Berlin. On googling this name along with the word ‘linkedin’, I found a page which matched the description.
+
+![Picture 4](/images/bitsctf_2026/Picture4.png)
+
+[https://www.linkedin.com/in/shirley-klaus-3b76423a8/](https://www.linkedin.com/in/shirley-klaus-3b76423a8/)
+
+I looked around and didn’t find anything interesting right away. She was working at a company named Mikhailson and Co. (which does not exist). I then looked at the description for her education and found a critical hint.
+
+![Picture 5](/images/bitsctf_2026/Picture5.png)
+
+Stars & stargazing, and Instagram. Hmmm… so naturally I searched for her Instagram using her name along with the keywords stars, stargazing etc, but didn’t find anything. I even tried reverse image searching her profile picture but found nothing (made me go crazy a bit not gonna lie). But then it hit me, her linkedin banner was a photo of the night sky (space and stars!). I downloaded the photo to perform a reverse image search. I don’t know what did I expect trying to reverse image search a generic photo of the night sky, but don’t blame me for trying. Obviously, I did not get any useful results, so I did the next beset thing and manually inspected the photo, and wouldn’t you know it, I found a small faint line of text hidden in the top right corner of the image: \`secret_life_of_shir456\`
+
+![Picture 6](/images/bitsctf_2026/Picture6.png)
+
+Armed with this username and the fact that I am supposed to look for an Instagram account, I immediately discovered an account with this username. The account only had one post about her pet cat.
+
+![Picture 7](/images/bitsctf_2026/Picture7.png)
+
+[https://www.instagram.com/secret_life_of_shir456/](https://www.instagram.com/secret_life_of_shir456/)
+
+The results of the reverse image search on the photo of the cat weren’t so fruitful, as it turned out that it is a generic stock photo. I then turned my attention to the image caption, which stated that this user has a blog, and has a friend named \`l1l17h-hehe\`, which in my opinion are two really big hints.
+
+![Picture 8](/images/bitsctf_2026/Picture8.png)
+
+A simple google search for ‘Shirley blog posts’ revealed a vercel link which contained her daily blogs. Now, same as last time, I found not one but two critical hints. The red website clearly referred to Reddit, and the octocat referred to GitHub, and since the username for the reddit account was somewhere on this Github repo, I first searched for \`l1l17h-hehe\`’s Github account.
+
+![Picture 9](/images/bitsctf_2026/Picture9.png)
+
+[https://shirleys-blog-posts.vercel.app/](https://shirleys-blog-posts.vercel.app/)
+
+This was also simple enough, as I found it using google once again. I tried going through all of the repos and checked past commits before realizing I didn’t even check the profile description, and there it was, the username ‘Quiet-Department7684’
+
+![Picture 10](/images/bitsctf_2026/Picture10.png)
+
+[https://github.com/L1L17H-hehe?tab=repositories](https://github.com/L1L17H-hehe?tab=repositories)
+
+![Picture 11](/images/bitsctf_2026/Picture11.png)
+
+I then found a reddit account with the same name and found one post mentioning a youtube link and a reply from the same user saying that the video gave her insight for somewhere else to spill her thoughts.
+
+For me, this is where the rabbit hole truly began…
+
+![Picture 12](/images/bitsctf_2026/Picture12.png)
+
+[https://www.reddit.com/user/Quiet-Department7684/](https://www.reddit.com/user/Quiet-Department7684/)
+
+The youtube video wasn’t related to anything, which confused me especially because there weren’t any comments from Shirley or anything related to the CTF in the comments for that matter (this is going to be important later).
+
+![Picture 13](/images/bitsctf_2026/Picture13.png)
+
+[https://www.youtube.com/watch?v=d8S5t__4hTA](https://www.youtube.com/watch?v=d8S5t__4hTA)
+
+I should mention that I reached this part of the challenge within the first 30 minutes since the start of the CTF. I am making a point to specify this because the next part stole away 2 hours of my life I am never getting back.
+
+After trying to check the ‘Best Gymnastics’ Youtube page as well as their Instagram page for clues, I made the leap in logic: Tumbling… Tumblr?! (believe it or not, I actually said this out loud). But it made sense — her saying that she was inspired to spill her thoughts on another platform.
+
+Then to make matters worse, I stumbled across this account, which I am genuinely not sure was part of this rabbit hole to throw us off, or was made by one of the participants to troll the rest of us (I am certain the account was made after the competition started — a good 2 hours after it stated that too). It was so strange, all of the posts were made a few hours after the competition started.
+
+![Picture 14](/images/bitsctf_2026/Picture14.png)
+
+[https://www.tumblr.com/quiet-department7684](https://www.tumblr.com/quiet-department7684)
+
+Naturally I raised a ticket on the official discord server asking if this was legit, and I didn’t receive any response for a while. It was around 3:30 in the morning when I gave up and went to sleep, and wouldn’t you know it, that is when they decided to get back to me! When I woke up, I noticed that they had replied to my ticket 3 hours ago, saying that they fixed the issue and that I should probably check the YouTube comments once again.
+
+There it was. The critical hint.
+
+![Picture 15](/images/bitsctf_2026/Picture15.png)
+
+I also checked the YouTube channel for any additional clues, but found nothing. But that didn’t matter because I knew what I was looking for.
+
+![Picture 16](/images/bitsctf_2026/Picture16.png)
+
+Bingo!
+
+![Picture 17](/images/bitsctf_2026/Picture17.png)
+
+[https://www.tumblr.com/sh1rl3y123](https://www.tumblr.com/sh1rl3y123)
+
+I browsed through the posts and found the flag!
+
+![Picture 18](/images/bitsctf_2026/Picture18.png)
+
+Flag: \`BITSCTF{w45n7_7h15_0n3_4nn0y1ng}\`
+
+In the end, the challenge itself was really fun, and I didn’t find it annoying (the flag might think otherwise). What I did find annoying was the fact that there weren’t any clues on the YouTube video when I reached that point of the challenge initially — I mean I could’ve been the first person who solved this challenge if that was the case! But hey what matters most is the fact that I did indeed solve it, and enjoyed the process. Stay tuned for my next article.`
     },
     {
         slug: "how-i-passed-the-ejpt-exam-as-a-beginner",

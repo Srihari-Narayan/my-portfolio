@@ -649,14 +649,16 @@ function WriteupViewer() {
                 }
 
                 .article-inline-img {
-                    display: block;
-                    max-width: 250px;
-                    height: auto;
-                    margin: 2.5rem auto;
-                    border-radius: var(--radius-md);
-                    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
-                    border: 1px solid var(--glass-border);
-                }
+                     display: block;
+                     max-width: 100%;
+                     max-height: 500px;
+                     width: auto;
+                     height: auto;
+                     margin: 2.5rem auto;
+                     border-radius: var(--radius-md);
+                     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+                     border: 1px solid var(--glass-border);
+                 }
 
                 .article-link {
                     color: var(--color-red);
