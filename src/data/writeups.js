@@ -19,9 +19,43 @@ The content for this walkthrough will be uploaded here soon.`
         readTime: "6 min read",
         thumbnail: "/images/pt1.png",
         tags: ["thm", "certs", "pentesting"],
-        content: `## Content Coming Soon
+        content: `## Introduction
 
-The content for this walkthrough will be uploaded here soon.`
+Welcome back to another one of my legacy articles, where I talk about stuff which happened way back. This time, I want to talk about my experience with THM’s own PT1 exam.
+
+The story begins at DEFCON 33, which in itself was a cool experience for me, and I will be sure to attend to DEFCON 34 later this year. I came across THM’s booth in the Blue Team Village, and talked to the people at the stall, and told them that I had been using the cybersecurity learning platform since April of 2024. They then told me that I could get the exam voucher (with a retry voucher, believe me this is important for later) for free! I had the option between PT1 and SAL1, and I chose PT1. I might go for SAL1 one day who knows.
+
+I received the exam vouchers directly on my THM dashboard a few days after giving them my email, and planned on giving my exam on the 24th August, 2025 at around 11 AM. I had been preparing for the OSCP already so I felt confident.
+
+## The first attempt
+
+Same as last time, I researched on the exam format beforehand, and understood that there are 3 sections in total — Network pentest, one linux machine and one windows machine, Active Directory pentest, with two machines with one of them being the Domain Controller, and finally Web pentest, which included finding 4 bugs on a website. The Network section was going to be worth 36% of the overall grade, the active directory being 24%, and the web section being 40%.
+
+There were 10 flags to be captured across these three domains, with the network section having 4 flags (2 in each machine, one local and one after gaining privileged access), active directory having 2 flags (one in each machine), and the web section having 4 flags, one of each valid bug or vulnerability. To top all of this off, after finding the flags, you had to write a report, containing the finding name, CVSS score, flag value, description of the attack, potential remediation, which would have then determined if you passed or not, based on a score from 0 to 1000, with passing being 750.
+
+Long story short… I failed. It devastated me. I thought I was well prepared, I thought 48 hours would be more than enough. I simply underestimated the exam. I failed to capture 2 flags in the web section, and one flag in the Windows privileged user in the network section, and to make matters worse, I messed in the report section as well, losing out on a lot of points.
+
+## Preparation
+
+After the exam ended, I looked at my report analysis, and figured out what my weak spots were. For the web section, I practiced challenges with the help of PortSwigger Academy Labs to harden my OWASP top 10 concepts, which was something integral to this section. For the active directory and network section, I practiced Windows challenge boxes, giving special attention to privilege escalation techniques. I focused on refining my approach — how to prevent wasting time chasing rabbit holes, how to enumerate thoroughly, how to utilize searchsploit and exploit-db efficiently, and more.
+
+One of my blunders in the first attempt was using THM’s AttackBox for the first 6 hours in the exam, as opposed to using my Kali VM which contained my tools, scripts and binaries, and not to mention the necessary dependencies. Another blunder of mine was poor note taking. I panicked so much that I wasn’t capturing any of the other flags that I forgot to write down the steps and commands for the ones which I did capture. This time, I was ready to conquer the exam — I organized everything on my Kali VM. I planned on giving it on 5th September 2025, this time starting at 4:00 PM so technically I had “three” days (Its still 48 hours, but by starting late in the day, I gave myself the impression of more time.)
+
+## The second attempt
+
+Once again, I’ll spare you the boring details… I overprepared for the second attempt and captured all of the flags in the first 6 hours. I genuinely laughed out loud after finding the final flag. Was this the same exam which was giving me nightmares after failing the first time? This attempt really put things into perspective for me. The exam wasn’t difficult technically, but rather I had simply not prepared or practiced for it enough before. I also had not taken it too seriously before.
+
+It is strange to think something good came out of failure! I refined my methodology and approach so much, with actual proof to show for it.
+
+After having this revelation, I relaxed, and then wrote the report the next day with a fresh mind, after documenting my approach for each flag thoroughly. I got my results and analysis saying that I passed, a couple of minutes after I hit submit on the report. With results and analysis being delivered so instantly, there was definitely an AI grading the report, which really shows how heavily adopted AI is in our world now.
+
+When going through the results, I noticed that there was an issue with the flag submission for one of the flags in the web section, so I missed out on 40 points for that. The other aspects of the report for this particular vulnerability were correct however and I received full points for that. In my mind, I did capture all 10 flags.
+
+![TryHackMe PT1 Scorecard](/images/pt1_scorecard.png)
+
+## Conclusion
+
+Ultimately, I was happy that I passed, that too with such speed. But other than me passing this exam, I learned a really valuable lesson. It is okay to fail sometimes, as long as you learn something useful out of it. My failure demonstrated a poor methodology and a lack of practice, which was an eye-opening experience for me. There was no such thing as too much practice, and you can always improve your skills. This entire experience was ingrained in my mind as I continued preparing for the OSCP exam.`
     },
     {
         slug: "juicy-thm-ai-challenge-box-walkthrough",
